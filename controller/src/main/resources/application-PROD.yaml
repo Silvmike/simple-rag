@@ -11,6 +11,4 @@ spring:
       username: test
     url: jdbc:postgresql://localhost:5432/test
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

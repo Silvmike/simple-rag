@@ -41,6 +41,7 @@ dependencies {
 	//implementation 'org.springframework.ai:spring-ai-starter-model-openai'
 	//implementation 'org.springframework.ai:spring-ai-starter-vector-store-qdrant'
 	implementation 'com.zaxxer:HikariCP'
+	implementation 'com.h2database:h2'
 	implementation 'org.hibernate.orm:hibernate-core'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
