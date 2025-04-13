@@ -1,6 +1,7 @@
 services:
   embed:
     build: ./embed
+    image: test-embed
     ports:
       - 8000:8000
     expose:
