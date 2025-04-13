@@ -27,7 +27,6 @@ repositories {
 
 ext {
 	set('springAiVersion', "1.0.0-M7")
-	set('springDataVersion', "2024.1.4")
 }
 
 dependencies {
