@@ -6,6 +6,8 @@ services:
       - 8000:8000
     expose:
       - 8000
+    networks:
+      - common
   qdrant:
     image: qdrant/qdrant:latest
     restart: always
@@ -17,11 +19,31 @@ services:
       - 6333
       - 6334
       - 6335
+    networks:
+      - common
     configs:
       - source: qdrant_config
         target: /qdrant/config/production.yaml
     volumes:
       - ./.qdrant_data:/qdrant/storage
+  doc_storage:
+    image: postgres:16.8
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      PGDATA: /data/postgres
+    volumes:
+       - ./.postgres_data:/data/postgres
+       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - common
+    restart: unless-stopped
+
+networks:
+  common:
+    driver: bridge
 
 configs:
   qdrant_config:
