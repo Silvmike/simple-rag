@@ -1,3 +1,8 @@
 .venv
 .qdrant_data
 .postgres_data
+build
+.gradle
+.idea
+*.iml
+
