@@ -4,8 +4,6 @@ server:
 spring:
   application:
     name: demo
-  profiles:
-    active: PROD
   jpa:
     hibernate:
       ddl-auto: none
