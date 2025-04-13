@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: demo
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-test-query: select 1
+      maximum-pool-size: 10
+      connection-timeout: 3000
+      password: test
+      username: test
+    url: jdbc:postgresql://localhost:5432/test
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

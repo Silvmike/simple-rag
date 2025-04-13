@@ -4,14 +4,8 @@ server:
 spring:
   application:
     name: demo
-#  datasource:
-#    driver-class-name: org.postgresql.Driver
-#    hikari:
-#      jdbc-url: jdbc:postgresql://localhost:5432/test
-#      connection-test-query: select 1
-#      maximum-pool-size: 10
-#      connection-timeout: 3000
-#  jpa:
-#    hibernate:
-#      ddl-auto: none
-
+  profiles:
+    active: PROD
+  jpa:
+    hibernate:
+      ddl-auto: none
