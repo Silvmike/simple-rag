@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: demo
   datasource:
     driver-class-name: org.h2.Driver
     password: password
