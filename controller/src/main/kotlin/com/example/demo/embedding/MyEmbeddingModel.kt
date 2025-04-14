@@ -57,4 +57,6 @@ class MyEmbeddingModel(
         URI.create(urlProvider.url()).let { uri ->
             embed(uri, document.formattedContent).toFloatArray()
         }
+
+    override fun dimensions(): Int = 1024
 }
