@@ -10,8 +10,7 @@ spring:
       connection-test-query: select 1
       maximum-pool-size: 10
       connection-timeout: 3000
-      password: test
-      username: test
-    url: jdbc:postgresql://localhost:5432/test
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create
