@@ -1,6 +1,6 @@
 package com.example.demo.embedding
 
-interface UrlProvider {
+fun interface UrlProvider {
 
     fun url(): String
 

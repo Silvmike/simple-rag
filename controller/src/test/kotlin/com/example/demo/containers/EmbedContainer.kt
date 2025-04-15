@@ -1,29 +1,31 @@
 package com.example.demo.containers
 
 import jakarta.annotation.PreDestroy
-import org.springframework.boot.test.util.TestPropertyValues
+import kotlinx.coroutines.delay
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
 import org.testcontainers.containers.GenericContainer
+import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
-import kotlin.random.Random
+import java.time.Duration
+import java.util.concurrent.TimeUnit
 
-class VectorStoreContainer :
-    GenericContainer<VectorStoreContainer>(DockerImageName.parse("qdrant/qdrant:v1.13.6")),
+class EmbedContainer :
+    GenericContainer<EmbedContainer>(
+        DockerImageName.parse("test-embed:latest")
+    ),
     ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private val port = Random.nextInt(3000, 6000)
-
     init {
-        addFixedExposedPort(port, 6334)
+        addFixedExposedPort(8000, 8000)
+        waitingFor(
+            Wait.forHttp("/health")
+        );
     }
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
         start()
-        TestPropertyValues.of(
-            "spring.ai.vectorstore.qdrant.host=localhost",
-            "spring.ai.vectorstore.qdrant.port=$port",
-        ).applyTo(applicationContext.environment);
+
     }
 
     @PreDestroy
