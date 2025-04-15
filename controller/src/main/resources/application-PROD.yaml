@@ -4,6 +4,8 @@ spring:
       qdrant:
         host: localhost
         port: 6334
+        initialize-schema: on
+        collection-name: docs
   datasource:
     driver-class-name: org.postgresql.Driver
     hikari:

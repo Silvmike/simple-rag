@@ -1,5 +1,6 @@
 package com.example.demo.embedding
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.type.TypeFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -16,37 +17,41 @@ import java.net.http.HttpResponse.BodyHandlers
 
 //TODO
 class MyEmbeddingModel(
-    private val urlProvider: UrlProvider,
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
+    private val urlProvider: UrlProvider
 ) : EmbeddingModel {
 
     private val mapper = ObjectMapper()
         .registerModules(KotlinModule.Builder().build())
 
     private val floatList = TypeFactory.defaultInstance()
-        .constructCollectionType(MutableList::class.java, Float::class.java)
+        .constructType(object : TypeReference<MutableList<MutableList<Float>>>() {})
 
     override fun call(request: EmbeddingRequest) =
-        URI.create(urlProvider.url()).let { uri ->
-            EmbeddingResponse(
-                request.instructions.mapIndexed { index, value ->
-                    val list = embed(uri, value)
-                    Embedding(list.toFloatArray(), index)
-                }
-            )
-        }
+        EmbeddingResponse(
+            embed(
+                URI(urlProvider.url()),
+                request.instructions
+            ).mapIndexed {
+                index, result -> Embedding(result.toFloatArray(), index)
+            }
+        )
 
-    private fun embed(uri: URI, value: String): MutableList<Float> {
+    private fun embed(uri: URI, value: List<String>): MutableList<MutableList<Float>> {
         val response = httpClient
             .send(
                 HttpRequest.newBuilder()
                     .uri(uri)
-                    .POST(BodyPublishers.ofString(value))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(BodyPublishers.ofString(
+                        mapper.writeValueAsString(value)
+                    ))
                     .build(),
                 BodyHandlers.ofInputStream()
             )
 
-        val list = mapper.readValue<MutableList<Float>>(
+        val list = mapper.readValue<MutableList<MutableList<Float>>>(
             response.body(),
             floatList
         )
@@ -55,7 +60,7 @@ class MyEmbeddingModel(
 
     override fun embed(document: Document): FloatArray =
         URI.create(urlProvider.url()).let { uri ->
-            embed(uri, document.formattedContent).toFloatArray()
+            embed(uri, listOf(document.formattedContent))[0].toFloatArray()
         }
 
     override fun dimensions(): Int = 1024

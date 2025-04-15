@@ -10,5 +10,9 @@ model = SentenceTransformer('ai-forever/sbert_large_nlu_ru', device='cpu')
 async def embed(texts: List[str]):
     return model.encode(texts).tolist()
 
+@app.get("/health",)
+def get_health():
+    return "OK"
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
