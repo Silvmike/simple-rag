@@ -1,6 +1,7 @@
 package com.example.demo
 
 import com.example.demo.app.DemoApplication
+import com.example.demo.chat.MyChatClient
 import com.example.demo.containers.DatabaseContainer
 import com.example.demo.containers.EmbedContainer
 import com.example.demo.containers.VectorStoreContainer
@@ -36,6 +37,8 @@ class DemoApplicationTests {
 	@Autowired
 	lateinit var vectorStore: QdrantVectorStore
 
+	lateinit var chatClient: MyChatClient
+
 	@Test
 	fun contextLoads() {
 
@@ -68,6 +71,8 @@ class DemoApplicationTests {
 		)
 
 		println(vectorStore.similaritySearch("цепь на дубе"))
+
+		println(chatClient.exchange("Come up with 5 famous pirates' names"))
 	}
 
 }

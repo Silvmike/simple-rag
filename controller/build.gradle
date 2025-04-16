@@ -38,12 +38,15 @@ dependencies {
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
 	implementation 'org.springframework.ai:spring-ai-pdf-document-reader'
-	//implementation 'org.springframework.ai:spring-ai-starter-model-openai'
+	implementation 'org.springframework.ai:spring-ai-model'
 	implementation 'org.springframework.ai:spring-ai-starter-vector-store-qdrant'
 	implementation 'com.zaxxer:HikariCP'
 	implementation 'com.h2database:h2'
 	implementation 'org.hibernate.orm:hibernate-core'
 	implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.9.9'
+
+	implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
