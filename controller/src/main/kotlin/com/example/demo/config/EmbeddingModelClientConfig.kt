@@ -1,7 +1,8 @@
 package com.example.demo.config
 
+import com.example.demo.embedding.EmbedClient
+import com.example.demo.embedding.EmbedClientImpl
 import com.example.demo.embedding.MyEmbeddingModel
-import com.example.demo.embedding.StubEmbeddingModel
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.net.http.HttpClient
@@ -11,11 +12,13 @@ import java.time.Duration
 class EmbeddingModelClientConfig {
 
     @Bean
-    fun embeddingModel(httpClient: HttpClient) = MyEmbeddingModel(
-        httpClient
-    ) {
-        "http://localhost:8000/embed"
-    }
+    fun embeddingModel(embedClient: EmbedClient) = MyEmbeddingModel(embedClient)
+
+    @Bean
+    fun embedClient(httpClient: HttpClient) =
+        EmbedClientImpl(httpClient) {
+            "http://localhost:8000/embed"
+        }
 
     @Bean
     fun httpClient(): HttpClient =
