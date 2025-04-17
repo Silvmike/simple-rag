@@ -4,6 +4,7 @@ plugins {
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'org.jetbrains.kotlin.plugin.jpa' version '2.0.20'
+	id "org.openapi.generator" version "7.12.0"
 }
 
 group = 'com.example'
@@ -75,6 +76,35 @@ allOpen {
 	annotation 'jakarta.persistence.Entity'
 	annotation 'jakarta.persistence.MappedSuperclass'
 	annotation 'jakarta.persistence.Embeddable'
+}
+
+openApiGenerate {
+	inputSpec.set("$rootDir/docs/api/giga_chat/api.yml")
+	generatorName.set("kotlin")
+	apiPackage = "com.example.demo.chat.giga.api"
+	modelPackage = "com.example.demo.chat.giga.model"
+	skipValidateSpec = true
+	library = "jvm-spring-webclient"
+	additionalProperties["serializationLibrary"] = "jackson"
+	modelNameMappings["File"] = "UserFile"
+	supportingFilesConstrainedTo = []
+	globalProperties.set([
+		apis: "false",
+		modelDocs: "false",
+		models: ""
+	])
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir("$buildDir/generate-resources/main/src/main/kotlin")
+		}
+	}
+}
+
+tasks.compileKotlin{
+	dependsOn("openApiGenerate")
 }
 
 tasks.named('test') {

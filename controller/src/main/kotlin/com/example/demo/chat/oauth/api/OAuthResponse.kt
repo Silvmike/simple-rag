@@ -1,4 +1,4 @@
-package com.example.demo.chat.oauth
+package com.example.demo.chat.oauth.api
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
