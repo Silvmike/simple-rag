@@ -10,6 +10,8 @@ import com.example.demo.chat.oauth.EnvironmentAuthKeyProvider
 import com.example.demo.chat.oauth.OAuth2ClientImpl
 import com.example.demo.chat.oauth.OAuthTokenProvider
 import com.example.demo.chat.oauth.api.TokenProvider
+import com.example.demo.datetime.DefaultLocalDateTimeProvider
+import com.example.demo.datetime.LocalDateTimeProvider
 import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -21,10 +23,16 @@ class ChatClientConfig {
     fun unsafeHttpClient() = UnsafeClientFactory.create()
 
     @Bean
-    fun oAuthTokenProvider(httpClient: OkHttpClient) = OAuthTokenProvider(
-        OAuth2ClientImpl(httpClient),
-        EnvironmentAuthKeyProvider()
-    )
+    fun localDateTimeProvider() = DefaultLocalDateTimeProvider
+
+    @Bean
+    fun oAuthTokenProvider(httpClient: OkHttpClient,
+                           localDateTimeProvider: LocalDateTimeProvider) =
+        OAuthTokenProvider(
+            OAuth2ClientImpl(httpClient),
+            EnvironmentAuthKeyProvider(),
+            localDateTimeProvider
+        )
 
     @Bean
     fun gigaChatClient(

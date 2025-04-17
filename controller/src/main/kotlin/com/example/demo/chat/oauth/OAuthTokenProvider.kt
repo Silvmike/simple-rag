@@ -4,6 +4,7 @@ import com.example.demo.chat.oauth.api.AuthKeyProvider
 import com.example.demo.chat.oauth.api.OAuth2Client
 import com.example.demo.chat.oauth.api.OAuthResponse
 import com.example.demo.chat.oauth.api.TokenProvider
+import com.example.demo.datetime.LocalDateTimeProvider
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
@@ -14,6 +15,7 @@ import kotlin.concurrent.withLock
 class OAuthTokenProvider(
     private val client: OAuth2Client,
     private val authKeyProvider: AuthKeyProvider,
+    private val localDateTimeProvider: LocalDateTimeProvider,
     private val thresholdMs: Long = TimeUnit.MINUTES.toMillis(1)
 ) : TokenProvider {
 
@@ -37,5 +39,5 @@ class OAuthTokenProvider(
             .orElseGet(supplier)
 
     private fun notExpired(existing: OAuthResponse) =
-        (existing.expiresAt - thresholdMs) > System.currentTimeMillis()
+        (existing.expiresAt - thresholdMs) > localDateTimeProvider.currentTimeMillis()
 }
