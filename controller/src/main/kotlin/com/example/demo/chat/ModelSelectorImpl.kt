@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 
 class ModelSelectorImpl(
-    private val gigaChatClient: GigaChatClient
+    private val gigaChatClient: GigaChatClient,
+    private val preferredModels: Set<String> = setOf("DeepSeek-R1")
 ) : ModelSelector {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -14,13 +15,16 @@ class ModelSelectorImpl(
 
     override fun selectModel(): String =
         modelCache.computeIfAbsent("model") {
-            gigaChatClient.getModels().data!!.asSequence()
-                .filter { it.type == "chat" }
-                .map { it.id }
-                .filterNotNull()
-                .first()
-                .apply {
-                    logger.info("[GigaChat] Selected model: $this")
-                }
+            gigaChatClient.getModels().data!!.let { models ->
+                val suitable = models
+                    .filter { model -> model.type == "chat" }
+                    .mapNotNull { model -> model.id }
+
+                suitable.firstOrNull { modelName ->
+                    preferredModels.contains(modelName)
+                } ?: suitable[0]
+            }.apply {
+                logger.info("[GigaChat] Selected model: $this")
+            }
         }
 }
