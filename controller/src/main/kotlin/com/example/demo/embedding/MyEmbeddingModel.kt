@@ -1,5 +1,6 @@
 package com.example.demo.embedding
 
+import com.example.demo.embedding.api.EmbedClient
 import org.springframework.ai.document.Document
 import org.springframework.ai.embedding.Embedding
 import org.springframework.ai.embedding.EmbeddingModel

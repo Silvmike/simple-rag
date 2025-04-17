@@ -1,6 +1,6 @@
 package com.example.demo.config
 
-import com.example.demo.embedding.EmbedClient
+import com.example.demo.embedding.api.EmbedClient
 import com.example.demo.embedding.EmbedClientImpl
 import com.example.demo.embedding.MyEmbeddingModel
 import org.springframework.context.annotation.Bean
