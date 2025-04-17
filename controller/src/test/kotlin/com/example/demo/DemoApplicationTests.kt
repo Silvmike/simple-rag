@@ -1,7 +1,8 @@
 package com.example.demo
 
 import com.example.demo.app.DemoApplication
-import com.example.demo.chat.MyChatClient
+import com.example.demo.chat.api.MyChat
+import com.example.demo.chat.giga.api.GigaChatClient
 import com.example.demo.containers.DatabaseContainer
 import com.example.demo.containers.EmbedContainer
 import com.example.demo.containers.VectorStoreContainer
@@ -37,7 +38,8 @@ class DemoApplicationTests {
 	@Autowired
 	lateinit var vectorStore: QdrantVectorStore
 
-	lateinit var chatClient: MyChatClient
+	@Autowired
+	lateinit var chatClient: MyChat
 
 	@Test
 	fun contextLoads() {

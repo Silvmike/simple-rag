@@ -1,6 +1,7 @@
 package com.example.demo.chat.oauth
 
-import com.example.demo.chat.UnsafeClientFactory
+import com.example.demo.chat.oauth.api.OAuth2Client
+import com.example.demo.chat.oauth.api.OAuthResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import okhttp3.FormBody
@@ -10,21 +11,14 @@ import java.nio.charset.Charset
 import java.util.*
 
 
-class OAuth2Client(
+class OAuth2ClientImpl(
     val client: OkHttpClient,
     val scope: String = "GIGACHAT_API_PERS"
-) {
+) : OAuth2Client {
 
     private val mapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
 
-    fun requestToken(
-        clientId: String,
-        clientSecret: String,
-    ): OAuthResponse = requestToken(
-        Base64.getEncoder().encodeToString("$clientId:$clientSecret".toByteArray())
-    )
-
-    fun requestToken(authKey: String): OAuthResponse =
+    override fun requestToken(authKey: String): OAuthResponse =
         mapper.readValue(
             client.newCall(
                 Request.Builder()
@@ -50,9 +44,4 @@ class OAuth2Client(
             OAuthResponse::class.java
         )
 
-}
-
-fun main() {
-    val oAuth2Client = OAuth2Client(UnsafeClientFactory.create())
-    println(oAuth2Client.requestToken("aaaaa"))
 }
