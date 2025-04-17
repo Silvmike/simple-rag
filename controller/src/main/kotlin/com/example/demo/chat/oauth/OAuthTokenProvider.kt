@@ -4,9 +4,11 @@ import com.example.demo.chat.oauth.api.AuthKeyProvider
 import com.example.demo.chat.oauth.api.OAuth2Client
 import com.example.demo.chat.oauth.api.OAuthResponse
 import com.example.demo.chat.oauth.api.TokenProvider
+import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 import java.util.concurrent.locks.ReentrantLock
+import java.util.function.Supplier
 import kotlin.concurrent.withLock
 
 class OAuthTokenProvider(
@@ -18,21 +20,21 @@ class OAuthTokenProvider(
     private val lock = ReentrantLock()
     private val reference = AtomicReference<OAuthResponse>()
 
-    override fun provide(): String {
-        val existing = reference.get()
-        if (existing != null && notExpired(existing)) {
-            return existing.accessToken
-        }
-        lock.withLock {
-            val possiblyValid = reference.get()
-            if (possiblyValid != null && notExpired(possiblyValid)) {
-                return possiblyValid.accessToken
+    override fun provide(): String =
+        reference.validTokenOrElse {
+            lock.withLock {
+                reference.validTokenOrElse {
+                    client.requestToken(authKeyProvider.provide()).apply {
+                        reference.set(this)
+                    }
+                }
             }
-            val result = client.requestToken(authKeyProvider.provide())
-            reference.set(result)
-            return result.accessToken
-        }
-    }
+        }.accessToken
+
+    private fun AtomicReference<OAuthResponse>.validTokenOrElse(supplier: Supplier<OAuthResponse>) =
+        Optional.ofNullable(get())
+            .filter { notExpired(it) }
+            .orElseGet(supplier)
 
     private fun notExpired(existing: OAuthResponse) =
         (existing.expiresAt - thresholdMs) > System.currentTimeMillis()
