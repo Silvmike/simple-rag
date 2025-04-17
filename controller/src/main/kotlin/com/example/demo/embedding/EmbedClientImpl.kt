@@ -1,5 +1,7 @@
 package com.example.demo.embedding
 
+import com.example.demo.embedding.api.EmbedClient
+import com.example.demo.embedding.api.UrlProvider
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.type.TypeFactory
