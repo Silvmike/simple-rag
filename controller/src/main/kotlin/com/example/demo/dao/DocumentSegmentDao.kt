@@ -1,7 +1,10 @@
 package com.example.demo.dao
 
-import com.example.demo.entity.DocumentSegment
+import com.example.demo.entity.DocumentSegmentEntity
 import org.springframework.data.jpa.repository.JpaRepository
-import java.util.*
 
-interface DocumentSegmentDao : JpaRepository<DocumentSegment, Long>
+interface DocumentSegmentDao : JpaRepository<DocumentSegmentEntity, Long> {
+
+    fun findByDocumentId(documentId: Long): List<DocumentSegmentEntity>
+
+}

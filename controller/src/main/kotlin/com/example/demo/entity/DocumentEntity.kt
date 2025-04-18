@@ -4,14 +4,14 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "document")
-class Document(
+class DocumentEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    val id: Long? = null,
+    var id: Long? = null,
 
     @Lob
     @Column(name = "doc", nullable = false)
-    val doc: String? = null
+    var content: String? = null
 )

@@ -19,13 +19,12 @@ class EmbedContainer :
     init {
         addFixedExposedPort(8000, 8000)
         waitingFor(
-            Wait.forHttp("/health")
+            Wait.forHttp("/health").withStartupTimeout(Duration.ofSeconds(30))
         );
     }
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
         start()
-
     }
 
     @PreDestroy
