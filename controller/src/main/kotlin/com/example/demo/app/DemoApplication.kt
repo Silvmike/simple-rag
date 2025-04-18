@@ -1,19 +1,17 @@
 package com.example.demo.app
 
-import com.example.demo.config.ChatClientConfig
-import com.example.demo.config.DbConfig
-import com.example.demo.config.EmbeddingModelClientConfig
-import com.example.demo.config.RestConfig
+import com.example.demo.config.*
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication
 @Import(value = [
-	RestConfig::class,
 	DbConfig::class,
 	EmbeddingModelClientConfig::class,
-	ChatClientConfig::class
+	ChatClientConfig::class,
+	ServiceConfig::class,
+	RestConfig::class
 ])
 class DemoApplication
 

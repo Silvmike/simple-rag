@@ -2,15 +2,11 @@ package com.example.demo
 
 import com.example.demo.app.DemoApplication
 import com.example.demo.chat.api.MyChat
-import com.example.demo.chat.giga.api.GigaChatClient
 import com.example.demo.containers.DatabaseContainer
 import com.example.demo.containers.EmbedContainer
 import com.example.demo.containers.VectorStoreContainer
-import com.example.demo.dao.DocumentDao
-import com.example.demo.dao.DocumentSegmentDao
-import com.example.demo.entity.Document
-import com.example.demo.entity.DocumentSegment
-import com.example.demo.service.api.TxService
+import com.example.demo.service.api.DomainDocument
+import com.example.demo.service.store.UnsegmentedDocumentService
 import org.junit.jupiter.api.Test
 import org.springframework.ai.vectorstore.qdrant.QdrantVectorStore
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,13 +23,7 @@ import org.springframework.test.context.ContextConfiguration
 class DemoApplicationTests {
 
 	@Autowired
-	lateinit var documentDao: DocumentDao
-
-	@Autowired
-	lateinit var documentSegmentDao: DocumentSegmentDao
-
-	@Autowired
-	lateinit var txService: TxService
+	lateinit var unsegmentedDocumentService: UnsegmentedDocumentService
 
 	@Autowired
 	lateinit var vectorStore: QdrantVectorStore
@@ -44,31 +34,15 @@ class DemoApplicationTests {
 	@Test
 	fun contextLoads() {
 
-		val id = txService.execute {
-			var doc = Document(doc = "docododod")
-			doc = documentDao.save(doc)
-
-			val fragment = documentSegmentDao.save(DocumentSegment(
-				fragment = "doc",
-				document = doc
-			))
-
-			doc.id
-		}
-
-		vectorStore.add(
-			listOf(
-				org.springframework.ai.document.Document(
+		unsegmentedDocumentService.createDocument(
+			DomainDocument(
+				content =
 					"У лукоморья дуб зелёный " +
-							"Златая цепь на дубе том " +
-							"И днём и ночью кот учёный " +
-							"Всё ходит по цепи кругом " +
-							"Идёт направо песнь заводит " +
-							"Налево сказку говорит".lowercase(),
-					mutableMapOf<String, Any?>(
-						"_id" to id.toString(),
-					)
-				)
+					"Златая цепь на дубе том " +
+					"И днём и ночью кот учёный " +
+					"Всё ходит по цепи кругом " +
+					"Идёт направо песнь заводит " +
+					"Налево сказку говорит".lowercase(),
 			)
 		)
 
