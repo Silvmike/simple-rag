@@ -23,12 +23,14 @@ repositories {
 
 ext {
 	jsoupVersion = "1.17.2"
+	okHttpVersion = "4.12.0"
 }
 
 dependencies {
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 
 	implementation "org.jsoup:jsoup:$jsoupVersion"
+	implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
 
 	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

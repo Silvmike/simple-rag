@@ -15,7 +15,7 @@ class QueryService(
     fun query(query: String): String {
         val docs = vectorStore.similaritySearch(
             SearchRequest.builder()
-                .query(query)
+                .query(query.lowercase())
                 .topK(5)
                 .build()
         )!!.map { it.text!! }
@@ -28,10 +28,15 @@ class QueryService(
             )
         )
 
+        val generatedRequest = PromptTemplate.from(promptDoc.text())
+            .apply(
+                mapOf("query" to query, "context" to toSources(docs))
+            ).text()
+
+        println("Generated request: $generatedRequest")
+
         return chat.exchange(
-            PromptTemplate.from(
-                promptDoc.text()
-            ).apply(mapOf("query" to query, "context" to toSources(docs))).text()
+            generatedRequest
         )
     }
 

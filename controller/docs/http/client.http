@@ -1,0 +1,13 @@
+POST http://localhost:8080/digest/html
+Content-Type: text/html
+
+<div>Some text</div>
+
+
+###
+
+POST http://localhost:8080/query
+Content-Type: application/json
+
+"Как запустить приложение на порту ниже 1024 при помощи systemd?"
+

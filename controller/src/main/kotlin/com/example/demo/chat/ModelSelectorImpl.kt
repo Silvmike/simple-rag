@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 class ModelSelectorImpl(
     private val gigaChatClient: GigaChatClient,
-    private val preferredModels: Set<String> = setOf("DeepSeek-R1")
+    private val preferredModels: Set<String> = setOf("GigaChat")
 ) : ModelSelector {
 
     private val logger = LoggerFactory.getLogger(javaClass)

@@ -10,6 +10,6 @@ object HtmlDocumentFactory {
         DomainDocument(
             content = HtmlToTextDocumentTransformer().transform(
                 Document.from(content)
-            ).text()
+            ).text().lowercase()
         )
 }
