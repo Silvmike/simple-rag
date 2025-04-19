@@ -11,6 +11,7 @@ class DocumentSegmentEntity(
     @Column(name = "id", nullable = false)
     var id: Long? = null,
 
+    @Lob
     @Column(name = "fragment", nullable = false)
     var fragment: String? = null,
 

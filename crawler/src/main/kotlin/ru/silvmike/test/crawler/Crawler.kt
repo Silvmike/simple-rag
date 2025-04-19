@@ -47,7 +47,8 @@ class Crawler : RecursiveTask<List<ParsedPage>> {
                             depth + 1,
                             visited
                         )
-                    }
+                    }.toList()
+
                 crawlers
                     .map { it.fork() }
                     .map { it.join() }
@@ -59,7 +60,8 @@ class Crawler : RecursiveTask<List<ParsedPage>> {
             }
         } catch (e: Exception) {
             println("Failed to download ${settings.startUrl}")
-            emptyList<ParsedPage>()
+            e.printStackTrace()
+            emptyList()
         }
     }
 
