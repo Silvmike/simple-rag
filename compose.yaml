@@ -1,4 +1,13 @@
 services:
+  deepseek:
+    build: ./deepseek
+    image: llama-deepseek
+    ports:
+      - 11434:11434
+    expose:
+      - 11434
+    networks:
+      - common
   embed:
     build: ./embed
     image: test-embed

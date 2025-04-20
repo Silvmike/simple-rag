@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Import
 @Import(value = [
 	DbConfig::class,
 	EmbeddingModelClientConfig::class,
-	ChatClientConfig::class,
+	GigaChatClientConfig::class,
+	DeepSeekClientConfig::class,
 	ServiceConfig::class,
 	RestConfig::class
 ])

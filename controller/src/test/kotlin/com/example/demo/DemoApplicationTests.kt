@@ -1,8 +1,10 @@
 package com.example.demo
 
 import com.example.demo.app.DemoApplication
+import com.example.demo.app.Profiles
 import com.example.demo.chat.api.MyChat
 import com.example.demo.containers.DatabaseContainer
+import com.example.demo.containers.DeepSeekContainer
 import com.example.demo.containers.EmbedContainer
 import com.example.demo.containers.VectorStoreContainer
 import com.example.demo.service.store.UnsegmentedDocumentService
@@ -15,10 +17,15 @@ import org.springframework.test.context.ContextConfiguration
 import java.util.concurrent.CountDownLatch
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@ActiveProfiles(TestProfiles.INTTEST)
+@ActiveProfiles(profiles = [TestProfiles.INTTEST, Profiles.DEEPSEEK])
 @ContextConfiguration(
 	classes = [DemoApplication::class],
-	initializers = [DatabaseContainer::class, VectorStoreContainer::class, EmbedContainer::class]
+	initializers = [
+		DatabaseContainer::class,
+		VectorStoreContainer::class,
+		EmbedContainer::class,
+		DeepSeekContainer::class
+	]
 )
 class DemoApplicationTests {
 
@@ -33,6 +40,9 @@ class DemoApplicationTests {
 
 	@Test
 	fun contextLoads() {
+
+		println(chatClient.exchange("Привет"))
+
 		CountDownLatch(1).await()
 	}
 

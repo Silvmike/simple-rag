@@ -6,7 +6,7 @@ import com.example.demo.chat.giga.api.GigaChatClient
 import com.example.demo.chat.giga.model.Chat
 import com.example.demo.chat.giga.model.Message
 
-class MyChatImpl(
+class GigaChatMyChatImpl(
     private val gigaChatClient: GigaChatClient,
     private val modelSelector: ModelSelector
 ) : MyChat {

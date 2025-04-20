@@ -1,7 +1,8 @@
 package com.example.demo.config
 
+import com.example.demo.app.Profiles
+import com.example.demo.chat.GigaChatMyChatImpl
 import com.example.demo.chat.ModelSelectorImpl
-import com.example.demo.chat.MyChatImpl
 import com.example.demo.chat.UnsafeClientFactory
 import com.example.demo.chat.api.ModelSelector
 import com.example.demo.chat.giga.GigaChatClientImpl
@@ -12,33 +13,24 @@ import com.example.demo.chat.oauth.OAuthTokenProvider
 import com.example.demo.chat.oauth.api.TokenProvider
 import com.example.demo.datetime.DefaultLocalDateTimeProvider
 import com.example.demo.datetime.LocalDateTimeProvider
-import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 
+@Profile(Profiles.GIGACHAT)
 @Configuration
-class ChatClientConfig {
+class GigaChatClientConfig {
 
     @Bean
-    fun unsafeHttpClient() = UnsafeClientFactory.create()
-
-    @Bean
-    fun localDateTimeProvider() = DefaultLocalDateTimeProvider
-
-    @Bean
-    fun oAuthTokenProvider(httpClient: OkHttpClient,
-                           localDateTimeProvider: LocalDateTimeProvider) =
+    fun oAuthTokenProvider(localDateTimeProvider: LocalDateTimeProvider) =
         OAuthTokenProvider(
-            OAuth2ClientImpl(httpClient),
+            OAuth2ClientImpl(UnsafeClientFactory.create()),
             EnvironmentAuthKeyProvider(),
             localDateTimeProvider
         )
 
     @Bean
-    fun gigaChatClient(
-        tokenProvider: TokenProvider,
-        httpClient: OkHttpClient
-    ) = GigaChatClientImpl(tokenProvider, httpClient)
+    fun gigaChatClient(tokenProvider: TokenProvider) = GigaChatClientImpl(tokenProvider, UnsafeClientFactory.create())
 
     @Bean
     fun modelSelector(gigaChatClient: GigaChatClient) =
@@ -48,6 +40,6 @@ class ChatClientConfig {
     fun myChat(
         gigaChatClient: GigaChatClient,
         modelSelector: ModelSelector
-    ) = MyChatImpl(gigaChatClient, modelSelector)
+    ) = GigaChatMyChatImpl(gigaChatClient, modelSelector)
 
 }
