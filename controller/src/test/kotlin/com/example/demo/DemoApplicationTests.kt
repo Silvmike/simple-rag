@@ -3,10 +3,7 @@ package com.example.demo
 import com.example.demo.app.DemoApplication
 import com.example.demo.app.Profiles
 import com.example.demo.chat.api.MyChat
-import com.example.demo.containers.DatabaseContainer
-import com.example.demo.containers.DeepSeekContainer
-import com.example.demo.containers.EmbedContainer
-import com.example.demo.containers.VectorStoreContainer
+import com.example.demo.containers.*
 import com.example.demo.service.store.UnsegmentedDocumentService
 import org.junit.jupiter.api.Test
 import org.springframework.ai.vectorstore.qdrant.QdrantVectorStore
@@ -24,7 +21,8 @@ import java.util.concurrent.CountDownLatch
 		DatabaseContainer::class,
 		VectorStoreContainer::class,
 		EmbedContainer::class,
-		DeepSeekContainer::class
+		DeepSeekContainer::class,
+		MyOpenSearchContainer::class
 	]
 )
 class DemoApplicationTests {

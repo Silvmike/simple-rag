@@ -1,0 +1,11 @@
+{
+  "properties": {
+    "key": {
+      "type": "keyword"
+    },
+    "my_text": {
+      "type": "text",
+      "analyzer": "rebuilt_russian"
+    }
+  }
+}

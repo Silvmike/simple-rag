@@ -1,0 +1,30 @@
+{
+  "index": {
+    "analysis": {
+      "filter": {
+        "russian_stop": {
+          "type": "stop",
+          "stopwords": "_russian_"
+        },
+        "russian_stemmer": {
+          "type": "stemmer",
+          "language": "russian"
+        }
+      },
+      "analyzer": {
+        "rebuilt_russian": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "char_filter": [
+            "html_strip"
+          ],
+          "filter": [
+            "lowercase",
+            "russian_stop",
+            "russian_stemmer"
+          ]
+        }
+      }
+    }
+  }
+}

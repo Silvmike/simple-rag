@@ -1,9 +1,33 @@
 services:
+  opensearch:
+    # NOTE: requires `sysctl -w vm.max_map_count=262144`
+    image: opensearchproject/opensearch:2
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=NdAiD123!qd
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+    expose:
+      - 9200
+      - 9600
+    mem_limit: 2147483648
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
   deepseek:
     build: ./deepseek
     image: llama-deepseek
     ports:
-      - 11434:11434
+      - "11434:11434"
     expose:
       - 11434
     networks:
@@ -22,8 +46,8 @@ services:
     restart: always
     container_name: qdrant
     ports:
-      - 6333:6333
-      - 6334:6334
+      - "6333:6333"
+      - "6334:6334"
     expose:
       - 6333
       - 6334
@@ -59,3 +83,7 @@ configs:
   qdrant_config:
     content: |
       log_level: INFO
+
+volumes:
+  opensearch-data:
+    driver: local

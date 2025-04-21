@@ -1,0 +1,54 @@
+PUT https://localhost:9200/my_index
+Authorization: Basic YWRtaW46TmRBaUQxMjMhcWQ=
+Content-Type: application/json
+
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "russian_stop": {
+          "type": "stop",
+          "stopwords": "_russian_"
+        },
+        "russian_stemmer": {
+          "type": "stemmer",
+          "language": "russian"
+        }
+      },
+      "analyzer": {
+        "rebuilt_russian": {
+          "tokenizer": "standard",
+          "char_filter": [
+            "html_strip"
+          ],
+          "filter": [
+            "lowercase",
+            "russian_stop",
+            "russian_stemmer"
+          ]
+        },
+        "folder_analyzer": {
+          "tokenizer": "path_tokenizer"
+        }
+      },
+      "tokenizer": {
+        "path_tokenizer": {
+          "type": "path_hierarchy",
+          "delimiter": "/"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "key": {
+        "type": "keyword"
+      },
+      "my_text": {
+        "type": "text",
+        "analyzer": "rebuilt_russian"
+      }
+    }
+  }
+}
+

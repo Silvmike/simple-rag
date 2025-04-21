@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Import
 	GigaChatClientConfig::class,
 	DeepSeekClientConfig::class,
 	ServiceConfig::class,
+	OpenSearchConfig::class,
 	RestConfig::class
 ])
 class DemoApplication
