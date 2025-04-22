@@ -3,6 +3,7 @@ package com.example.demo.config
 import com.example.demo.dao.DocumentDao
 import com.example.demo.dao.DocumentSegmentDao
 import com.example.demo.service.api.TxService
+import com.example.demo.service.segmentation.BaseSegmenter
 import com.example.demo.service.segmentation.Segmenter
 import com.example.demo.service.store.UnsegmentedDocumentServiceImpl
 import com.example.demo.service.store.VectorSegmentedDocumentService
@@ -23,8 +24,7 @@ class VectorConfig {
 
     @Bean
     fun unsegmentedDocumentService(
-        segmenter: Segmenter,
         segmentedDocumentService: VectorSegmentedDocumentService
-    ) = UnsegmentedDocumentServiceImpl(segmenter, segmentedDocumentService)
+    ) = UnsegmentedDocumentServiceImpl(BaseSegmenter(maxChars = 2048, maxOverlapChars = 32), segmentedDocumentService)
 
 }

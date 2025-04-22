@@ -17,8 +17,8 @@ class DeepSeekClientConfig {
     @Bean
     fun deepSeekClient() = OllamaClientImpl(
         OkHttpClient.Builder()
-            .connectTimeout(Duration.ofSeconds(60))
-            .readTimeout(Duration.ofSeconds(60))
+            .connectTimeout(Duration.ofSeconds(600))
+            .readTimeout(Duration.ofSeconds(600))
             .build(),
         "http://localhost:11434",
     )

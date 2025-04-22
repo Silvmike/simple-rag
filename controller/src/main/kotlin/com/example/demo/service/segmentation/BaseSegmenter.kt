@@ -4,8 +4,12 @@ import com.example.demo.service.api.DomainDocument
 import com.example.demo.service.api.DocumentSegment
 import com.example.demo.service.api.SegmentedDocument
 import dev.langchain4j.data.document.splitter.DocumentByParagraphSplitter
+import org.hibernate.sql.results.jdbc.internal.JdbcValuesMappingProducerProviderInitiator
 
-class BaseSegmenter : Segmenter {
+class BaseSegmenter(
+    private val maxChars: Int = 1024,
+    private val maxOverlapChars: Int = 512
+) : Segmenter {
 
     override fun split(domainDocument: DomainDocument): SegmentedDocument =
         SegmentedDocument(
@@ -14,7 +18,7 @@ class BaseSegmenter : Segmenter {
         )
 
     private fun doSplit(domainDocument: DomainDocument) =
-        DocumentByParagraphSplitter(2048, 512).split(
+        DocumentByParagraphSplitter(1024, 512).split(
             dev.langchain4j.data.document.Document.from(domainDocument.content)
         ).map { textSegment ->
             DocumentSegment(

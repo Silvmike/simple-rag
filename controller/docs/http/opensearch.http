@@ -52,3 +52,51 @@ Content-Type: application/json
   }
 }
 
+
+
+###
+
+POST http://localhost:9200/document/_search
+Content-Type: application/json
+
+{
+  "size": 5,
+  "query": {
+    "match": {
+      "content": {
+        "query": "отображение",
+        "analyzer": "rebuilt_russian"
+      }
+    }
+  }
+}
+
+###
+
+POST http://localhost:9200/document/_analyze
+Content-Type: application/json
+
+{
+    "text": "отображение",
+    "analyzer": "rebuilt_russian"
+}
+
+####
+
+POST http://localhost:9200/document/_search
+Content-Type: application/json
+
+{
+  "size": 100,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "Как произвести минимальную установку системы"
+          }
+        }
+      ]
+    }
+  }
+}

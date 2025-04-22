@@ -6,8 +6,9 @@ Content-Type: text/html
 
 ###
 
+# @timeout 6000
 POST http://localhost:8080/query
 Content-Type: application/json
 
-"Как запустить приложение на порту ниже 1024 при помощи systemd?"
+"Как улучшить отображение шрифтов в Fedora"
 
