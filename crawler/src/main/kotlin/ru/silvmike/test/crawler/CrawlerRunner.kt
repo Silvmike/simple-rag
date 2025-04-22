@@ -19,9 +19,11 @@ fun main() {
                 pageUrl.contains("russianfedora.github.io")
             }
         ) { page ->
-            client.digest(page.meaningfulContent!!)
+            page.meaningfulContent!!.forEach { content ->
+                client.digest(content)
+            }
             println(
-                "url: ${page.url} has ${page.urls.size} links on it"
+                "url: ${page.url} has ${page.meaningfulContent.size} meaningful extracts and ${page.urls.size} links on it"
             )
         }
     )

@@ -10,5 +10,5 @@ Content-Type: text/html
 POST http://localhost:8080/query
 Content-Type: application/json
 
-"Как улучшить отображение шрифтов в Fedora"
+"Как ускорить запуск системы?"
 

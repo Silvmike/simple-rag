@@ -93,7 +93,7 @@ Content-Type: application/json
       "must": [
         {
           "query_string": {
-            "query": "Как произвести минимальную установку системы"
+            "query": "Что необходимо для работы гибернации в Fedora"
           }
         }
       ]

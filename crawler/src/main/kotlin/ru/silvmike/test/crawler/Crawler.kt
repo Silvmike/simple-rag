@@ -67,7 +67,7 @@ class Crawler : RecursiveTask<List<ParsedPage>> {
 
     private fun copySettingsWithUrl(url: String) = CrawlerSettings(
         startUrl = url,
-        bodySelector = settings.bodySelector,
+        contentSelector = settings.contentSelector,
         urlSelector = settings.urlSelector,
         resultListener = settings.resultListener,
         maxDepth = settings.maxDepth,
@@ -103,7 +103,7 @@ class Crawler : RecursiveTask<List<ParsedPage>> {
                             }
                             .filter { pageUrl -> settings.urlFilter.test(pageUrl) }
                     ,
-                    meaningfulContent = settings.bodySelector.select(it)
+                    meaningfulContent = settings.contentSelector.select(it)
                 )
             }
 

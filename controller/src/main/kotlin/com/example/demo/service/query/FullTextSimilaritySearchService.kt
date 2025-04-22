@@ -28,7 +28,7 @@ class FullTextSimilaritySearchService(
 
                         }
                 }
-        }, DocumentIndexData::class.java).documents().map { it.content!! }
+        }, DocumentIndexData::class.java).hits().hits().map { it.source()!!.content!! }
 
     override fun getOrder(): Int = 1
 }
