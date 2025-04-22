@@ -1,5 +1,6 @@
-package com.example.demo.startup
+package com.example.demo.opensearch.startup
 
+import com.example.demo.opensearch.Indices
 import jakarta.annotation.PostConstruct
 import jakarta.json.stream.JsonParser
 import org.opensearch.client.json.JsonpMapper
@@ -14,7 +15,7 @@ import java.util.function.BiFunction
 
 
 class PrepareOpenSearchIndex(
-    val client: OpenSearchClient
+    private val client: OpenSearchClient
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -24,19 +25,25 @@ class PrepareOpenSearchIndex(
 
         val mapper: JsonpMapper = client._transport().jsonpMapper()
 
-        if (hasIndex("myindex")) {
-            logger.info("INDEX EXISTS, WON'T CREATED!")
+        Indices.entries.forEach {
+            createIndexIfNotExists(mapper, it.indexName)
+        }
+    }
+
+    private fun createIndexIfNotExists(jsonpMapper: JsonpMapper, name: String) {
+        if (hasIndex(name)) {
+            logger.info("INDEX [{}] EXISTS, WON'T CREATED!", name)
         }
 
         val mappings =
-            "opensearch/myindex_request_mappings.json".deserialize(mapper) { parser, mapper ->
+            "opensearch/${name}_request_mappings.json".deserialize(jsonpMapper) { parser, mapper ->
                 TypeMapping._DESERIALIZER.deserialize(
                     parser, mapper
                 )
             }
 
         val settings =
-            "opensearch/myindex_request_settings.json".deserialize(mapper) { parser, mapper ->
+            "opensearch/${name}_request_settings.json".deserialize(jsonpMapper) { parser, mapper ->
                 IndexSettings._DESERIALIZER.deserialize(
                     parser, mapper
                 )
@@ -44,13 +51,13 @@ class PrepareOpenSearchIndex(
 
         client.indices().create(
             CreateIndexRequest.Builder()
-                .index("myindex")
+                .index(name)
                 .mappings(mappings)
                 .settings(settings)
                 .build()
         )
 
-        logger.info("INDEX CREATED SUCCESSFULLY!")
+        logger.info("INDEX [{}] CREATED SUCCESSFULLY!", name)
     }
 
     private fun hasIndex(indexName: String) = client.cat().indices().valueBody().any {

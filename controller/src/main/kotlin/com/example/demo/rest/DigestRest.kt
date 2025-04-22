@@ -1,6 +1,7 @@
 package com.example.demo.rest
 
-import com.example.demo.service.store.UnsegmentedDocumentService
+import com.example.demo.service.store.api.CreateDocumentResponse
+import com.example.demo.service.store.api.UnsegmentedDocumentService
 import com.example.demo.service.transform.HtmlDocumentFactory
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,7 +15,7 @@ class DigestRest(
 ) {
 
     @PostMapping(path = ["/html"], consumes = ["text/html"])
-    fun digest(@RequestBody content: String): Long =
+    fun digest(@RequestBody content: String): CreateDocumentResponse =
         unsegmentedDocumentService.createDocument(
             HtmlDocumentFactory.transform(content)
         )

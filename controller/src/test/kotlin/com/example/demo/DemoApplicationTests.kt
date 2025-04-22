@@ -4,9 +4,7 @@ import com.example.demo.app.DemoApplication
 import com.example.demo.app.Profiles
 import com.example.demo.chat.api.MyChat
 import com.example.demo.containers.*
-import com.example.demo.service.store.UnsegmentedDocumentService
 import org.junit.jupiter.api.Test
-import org.springframework.ai.vectorstore.qdrant.QdrantVectorStore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
@@ -26,12 +24,6 @@ import java.util.concurrent.CountDownLatch
 	]
 )
 class DemoApplicationTests {
-
-	@Autowired
-	lateinit var unsegmentedDocumentService: UnsegmentedDocumentService
-
-	@Autowired
-	lateinit var vectorStore: QdrantVectorStore
 
 	@Autowired
 	lateinit var chatClient: MyChat

@@ -1,9 +1,9 @@
 {
   "properties": {
-    "key": {
+    "document_id": {
       "type": "keyword"
     },
-    "my_text": {
+    "content": {
       "type": "text",
       "analyzer": "rebuilt_russian"
     }

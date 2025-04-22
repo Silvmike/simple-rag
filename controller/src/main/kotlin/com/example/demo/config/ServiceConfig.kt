@@ -1,22 +1,22 @@
 package com.example.demo.config
 
 import com.example.demo.chat.api.MyChat
-import com.example.demo.dao.DocumentDao
-import com.example.demo.dao.DocumentSegmentDao
 import com.example.demo.datetime.DefaultLocalDateTimeProvider
-import com.example.demo.service.api.TxService
+import com.example.demo.service.query.ChainSimilaritySearchService
 import com.example.demo.service.query.QueryService
+import com.example.demo.service.query.VectorStoreSimilaritySearchService
+import com.example.demo.service.query.api.SimilaritySearchService
 import com.example.demo.service.segmentation.BaseSegmenter
-import com.example.demo.service.segmentation.Segmenter
-import com.example.demo.service.store.SegmentedDocumentService
-import com.example.demo.service.store.UnsegmentedDocumentService
 import org.springframework.ai.vectorstore.VectorStore
-import org.springframework.ai.vectorstore.qdrant.QdrantVectorStore
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 
-@Import(DbConfig::class)
+@Import(value = [
+    DbConfig::class,
+    VectorConfig::class,
+    FullTextConfig::class
+])
 @Configuration
 class ServiceConfig {
 
@@ -24,25 +24,15 @@ class ServiceConfig {
     fun localDateTimeProvider() = DefaultLocalDateTimeProvider
 
     @Bean
-    fun segmentedDocumentService(
-        vectoreStore: VectorStore,
-        documentSegmentDao: DocumentSegmentDao,
-        documentDao: DocumentDao,
-        txService: TxService
-    ) = SegmentedDocumentService(vectoreStore, documentSegmentDao, documentDao, txService)
+    fun queryService(
+        chain: List<SimilaritySearchService>,
+        chat: MyChat
+    ) = QueryService(ChainSimilaritySearchService(chain), chat)
 
     @Bean
-    fun unsegmentedDocumentService(
-        segmenter: Segmenter,
-        segmentedDocumentService: SegmentedDocumentService
-    ) = UnsegmentedDocumentService(segmenter, segmentedDocumentService)
+    fun vectorSimilaritySearchService(vectorStore: VectorStore) =
+        VectorStoreSimilaritySearchService(vectorStore)
 
     @Bean
     fun segmenter() = BaseSegmenter()
-
-    @Bean
-    fun queryService(
-        vectorStore: VectorStore,
-        chat: MyChat
-    ) = QueryService(vectorStore, chat)
 }

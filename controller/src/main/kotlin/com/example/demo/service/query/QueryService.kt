@@ -1,27 +1,21 @@
 package com.example.demo.service.query
 
 import com.example.demo.chat.api.MyChat
+import com.example.demo.service.query.api.SimilaritySearchService
 import dev.langchain4j.data.document.loader.FileSystemDocumentLoader
 import dev.langchain4j.model.input.PromptTemplate
 import org.slf4j.LoggerFactory
-import org.springframework.ai.vectorstore.SearchRequest
-import org.springframework.ai.vectorstore.VectorStore
 import java.nio.file.Paths
 
 class QueryService(
-    private val vectorStore: VectorStore,
+    private val similaritySearchService: SimilaritySearchService,
     private val chat: MyChat
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun query(query: String): String {
-        val docs = vectorStore.similaritySearch(
-            SearchRequest.builder()
-                .query(query.lowercase())
-                .topK(5)
-                .build()
-        )!!.map { it.text!! }
+        val docs = similaritySearchService.search(query)
 
         val promptDoc = FileSystemDocumentLoader.loadDocument(
             Paths.get(

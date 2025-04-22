@@ -6,17 +6,21 @@ import com.example.demo.entity.DocumentEntity
 import com.example.demo.entity.DocumentSegmentEntity
 import com.example.demo.service.api.SegmentedDocument
 import com.example.demo.service.api.TxService
+import com.example.demo.service.store.api.CreateDocumentResponse
+import com.example.demo.service.store.api.DocumentIdentifier
+import com.example.demo.service.store.api.IdentifierType
+import com.example.demo.service.store.api.SegmentedDocumentService
 import org.springframework.ai.document.Document
 import org.springframework.ai.vectorstore.VectorStore
 
-class SegmentedDocumentService(
+class VectorSegmentedDocumentService(
     private val vectoreStore: VectorStore,
     private val documentSegmentDao: DocumentSegmentDao,
     private val documentDao: DocumentDao,
     private val txService: TxService
-) {
+) : SegmentedDocumentService {
 
-    fun createDocument(segmentedDocument: SegmentedDocument): Long {
+    override fun createDocument(segmentedDocument: SegmentedDocument): CreateDocumentResponse {
 
         val documentEntity = DocumentEntity(
             content = segmentedDocument.document.content
@@ -51,7 +55,12 @@ class SegmentedDocumentService(
 
             documentSegmentDao.saveAll(segments)
 
-            documentEntity.id!!
+            CreateDocumentResponse(
+                ids = listOf(DocumentIdentifier(
+                    id = documentEntity.id.toString(),
+                    identifierType = IdentifierType.VECTOR
+                ))
+            )
         }
     }
 
@@ -63,10 +72,14 @@ class SegmentedDocumentService(
             "doc_id" to segment.document!!.id.toString()
         )
 
-    fun deleteDocument(documentId: Long) {
+    override fun deleteDocument(documentId: DocumentIdentifier) {
+        check(supportsIdentifier(documentId.identifierType)) {
+            "${documentId.identifierType} is not supported!"
+        }
+
         txService.execute {
-            val document = documentDao.findById(documentId).get()
-            val segments = documentSegmentDao.findByDocumentId(documentId)
+            val document = documentDao.findById(documentId.id.toLong()).get()
+            val segments = documentSegmentDao.findByDocumentId(documentId.id.toLong())
 
             vectoreStore.delete(
                 segments.map { it.qdrandtId }
@@ -75,5 +88,8 @@ class SegmentedDocumentService(
             documentDao.delete(document)
         }
     }
+
+    override fun supportsIdentifier(identifierType: IdentifierType): Boolean =
+        identifierType == IdentifierType.VECTOR
 
 }
