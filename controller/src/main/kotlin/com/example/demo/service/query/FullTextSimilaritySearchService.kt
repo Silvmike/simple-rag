@@ -4,7 +4,6 @@ import com.example.demo.opensearch.Indices
 import com.example.demo.opensearch.document.DocumentIndexData
 import com.example.demo.service.query.api.SimilaritySearchService
 import org.opensearch.client.opensearch.OpenSearchClient
-import org.opensearch.client.opensearch._types.SearchType
 import org.springframework.core.Ordered
 
 class FullTextSimilaritySearchService(

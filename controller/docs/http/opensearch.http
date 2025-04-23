@@ -87,13 +87,13 @@ POST http://localhost:9200/document/_search
 Content-Type: application/json
 
 {
-  "size": 100,
+  "size": 5,
   "query": {
     "bool": {
       "must": [
         {
           "query_string": {
-            "query": "Что необходимо для работы гибернации в Fedora"
+            "query": "шифрованный раздел подкачки"
           }
         }
       ]

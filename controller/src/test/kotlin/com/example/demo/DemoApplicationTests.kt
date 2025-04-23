@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration
 import java.util.concurrent.CountDownLatch
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@ActiveProfiles(profiles = [TestProfiles.INTTEST, Profiles.DEEPSEEK])
+@ActiveProfiles(profiles = [TestProfiles.INTTEST, Profiles.DEEPSEEK, Profiles.FULL_TEXT])
 @ContextConfiguration(
 	classes = [DemoApplication::class],
 	initializers = [

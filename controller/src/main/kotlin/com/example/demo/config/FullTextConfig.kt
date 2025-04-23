@@ -1,8 +1,14 @@
 package com.example.demo.config
 
+import com.example.demo.app.Profiles
+import com.example.demo.chat.api.MyChat
 import com.example.demo.opensearch.UnsafeOpenSearchClientFactory
 import com.example.demo.opensearch.startup.PrepareOpenSearchIndex
 import com.example.demo.service.query.FullTextSimilaritySearchService
+import com.example.demo.service.query.LoggingSimilaritySearchService
+import com.example.demo.service.query.advice.FullTextQueryAdvisingSimilaritySearchService
+import com.example.demo.service.query.advice.MyChatQueryEnricher
+import com.example.demo.service.query.advice.QueryEnricher
 import com.example.demo.service.segmentation.BaseSegmenter
 import com.example.demo.service.segmentation.Segmenter
 import com.example.demo.service.store.FulltextSegmentedDocumentService
@@ -12,8 +18,10 @@ import org.opensearch.client.opensearch.OpenSearchClient
 import org.opensearch.client.transport.OpenSearchTransport
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import kotlin.math.max
 
+@Profile(Profiles.FULL_TEXT)
 @Configuration
 class FullTextConfig {
 
@@ -37,6 +45,13 @@ class FullTextConfig {
     )
 
     @Bean
-    fun fullTextSimilaritySearchService(client: OpenSearchClient) =
-        FullTextSimilaritySearchService(client)
+    fun fullTextSimilaritySearchService(client: OpenSearchClient, queryEnricher: QueryEnricher) =
+        FullTextQueryAdvisingSimilaritySearchService(
+            delegate = LoggingSimilaritySearchService(FullTextSimilaritySearchService(client)),
+            queryEnricher = queryEnricher
+        )
+
+    @Bean
+    fun queryEnricher(chat: MyChat): QueryEnricher =
+        MyChatQueryEnricher(chat)
 }
