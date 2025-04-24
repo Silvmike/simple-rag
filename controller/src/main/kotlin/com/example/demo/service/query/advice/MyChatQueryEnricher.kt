@@ -5,6 +5,7 @@ import com.google.common.base.Suppliers
 import dev.langchain4j.data.document.loader.FileSystemDocumentLoader
 import dev.langchain4j.model.input.PromptTemplate
 import org.slf4j.LoggerFactory
+import java.io.StringReader
 import java.nio.file.Paths
 
 class MyChatQueryEnricher(
@@ -30,6 +31,25 @@ class MyChatQueryEnricher(
 
         logger.info("Generated request: $generatedRequest")
 
-        return chat.exchange(generatedRequest)
+        StringReader(chat.exchange(generatedRequest)).use {
+            val lines = it.readLines()
+
+            val suggestion = lines.filter {
+                it.startsWith("Оптимизированный запрос: ")
+            }.firstOrNull()?.replace("Оптимизированный запрос: ", "") ?: query
+
+            val reason = lines.filter {
+                it.startsWith("Пояснение: ")
+            }.firstOrNull()?.replace("Пояснение: ", "") ?: ""
+
+            logger.info(
+                "[FULLTEXT OPTIMIZER] Query: [{}], \n\tOptimized query: [{}], \n\tReason: [{}]",
+                query,
+                suggestion,
+                reason
+            )
+
+            return suggestion.replace("\"", "")
+        }
     }
 }

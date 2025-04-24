@@ -4,6 +4,9 @@ import com.example.demo.chat.api.MyChat
 import com.example.demo.datetime.DefaultLocalDateTimeProvider
 import com.example.demo.service.query.ChainSimilaritySearchService
 import com.example.demo.service.query.QueryService
+import com.example.demo.service.query.advice.MyChatQueryEnricher
+import com.example.demo.service.query.advice.QueryAdvisingSimilaritySearchService
+import com.example.demo.service.query.advice.QueryEnricher
 import com.example.demo.service.query.api.SimilaritySearchService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -23,7 +26,18 @@ class ServiceConfig {
     @Bean
     fun queryService(
         chain: List<SimilaritySearchService>,
-        chat: MyChat
-    ) = QueryService(ChainSimilaritySearchService(chain), chat)
+        chat: MyChat,
+        queryEnricher: QueryEnricher
+    ) = QueryService(
+        similaritySearchService = QueryAdvisingSimilaritySearchService(
+            delegate = ChainSimilaritySearchService(chain),
+            queryEnricher = queryEnricher
+        ),
+        chat = chat
+    )
+
+    @Bean
+    fun queryEnricher(chat: MyChat): QueryEnricher =
+        MyChatQueryEnricher(chat)
 
 }

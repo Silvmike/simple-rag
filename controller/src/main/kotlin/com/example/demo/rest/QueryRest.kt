@@ -15,5 +15,5 @@ class QueryRest(
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun query(@RequestBody query: String): String =
-        queryService.query(query)
+        queryService.query(query.replace("\"", ""))
 }

@@ -6,5 +6,6 @@ object Profiles {
     const val GIGACHAT = "GIGACHAT"
     const val VECTOR = "VECTOR"
     const val FULL_TEXT = "FULL_TEXT"
+    const val TEST_CHAT = "TEST_CHAT"
     const val DEEPSEEK = "DEEPSEEK"
 }

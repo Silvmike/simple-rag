@@ -8,7 +8,8 @@ class LoggingSimilaritySearchService(
     private val delegate: SimilaritySearchService
 ) : SimilaritySearchService {
 
-    private val logger = LoggerFactory.getLogger(javaClass)
+    private val logger = LoggerFactory.getLogger(delegate.javaClass)
+
     override fun search(query: String): List<String> =
         try {
             delegate.search(query).apply {

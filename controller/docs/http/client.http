@@ -10,7 +10,7 @@ Content-Type: text/html
 POST http://localhost:8080/query
 Content-Type: application/json
 
-"Как ускорить запуск системы?"
+"Как проверить работоспособность сети?"
 
 ###
 
@@ -18,5 +18,5 @@ Content-Type: application/json
 POST http://localhost:8080/query/advice
 Content-Type: application/json
 
-"Как склоняются существительные в русском языке?"
+"Как проверить открыт ли порт на удалённом сервере?"
 

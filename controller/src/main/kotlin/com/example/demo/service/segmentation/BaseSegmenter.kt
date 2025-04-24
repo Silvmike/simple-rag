@@ -18,7 +18,7 @@ class BaseSegmenter(
         )
 
     private fun doSplit(domainDocument: DomainDocument) =
-        DocumentByParagraphSplitter(1024, 512).split(
+        DocumentByParagraphSplitter(maxChars, maxOverlapChars).split(
             dev.langchain4j.data.document.Document.from(domainDocument.content)
         ).map { textSegment ->
             DocumentSegment(
