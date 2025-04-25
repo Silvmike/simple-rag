@@ -1,6 +1,6 @@
 package com.example.demo.config
 
-import com.example.demo.service.TxServiceImpl
+import com.example.demo.util.tx.TxServiceImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories

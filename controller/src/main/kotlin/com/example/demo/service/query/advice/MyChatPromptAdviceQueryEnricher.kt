@@ -10,14 +10,15 @@ import java.io.StringReader
 private const val OPTIMIZED_QUERY_PREFIX = "Оптимизированный запрос: "
 private const val REASON_PREFIX = "Пояснение: "
 
-class MyChatQueryEnricher(
+class MyChatPromptAdviceQueryEnricher(
     private val chat: MyChat,
+    private val promptTemplateResource: String = "/prompt/template/fulltext_advice.txt"
 ) : QueryEnricher {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
     private val promptDocSupplier = Suppliers.memoize {
-        "/prompt/template/fulltext_advice.txt".loadResourceDocument()
+        promptTemplateResource.loadResourceDocument()
     }
 
     override fun enrich(query: String): String {

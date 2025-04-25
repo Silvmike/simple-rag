@@ -1,4 +1,4 @@
-package com.example.demo.service.transform
+package com.example.demo.util.transform
 
 import com.example.demo.service.api.DomainDocument
 import dev.langchain4j.data.document.Document

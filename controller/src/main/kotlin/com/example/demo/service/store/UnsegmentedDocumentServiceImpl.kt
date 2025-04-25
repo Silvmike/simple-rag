@@ -4,6 +4,9 @@ import com.example.demo.service.api.DomainDocument
 import com.example.demo.service.segmentation.Segmenter
 import com.example.demo.service.store.api.*
 import com.example.demo.service.store.api.UnsegmentedDocumentService
+import com.example.demo.service.store.api.dto.CreateDocumentResponse
+import com.example.demo.service.store.api.dto.DocumentIdentifier
+import com.example.demo.service.store.api.dto.IdentifierType
 
 class UnsegmentedDocumentServiceImpl(
     private val segmenter: Segmenter,

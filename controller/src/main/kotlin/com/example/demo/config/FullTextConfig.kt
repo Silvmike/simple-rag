@@ -1,14 +1,10 @@
 package com.example.demo.config
 
 import com.example.demo.app.Profiles
-import com.example.demo.chat.api.MyChat
 import com.example.demo.opensearch.UnsafeOpenSearchClientFactory
 import com.example.demo.opensearch.startup.PrepareOpenSearchIndex
 import com.example.demo.service.query.FullTextSimilaritySearchService
 import com.example.demo.service.query.LoggingSimilaritySearchService
-import com.example.demo.service.query.advice.QueryAdvisingSimilaritySearchService
-import com.example.demo.service.query.advice.MyChatQueryEnricher
-import com.example.demo.service.query.advice.QueryEnricher
 import com.example.demo.service.segmentation.BaseSegmenter
 import com.example.demo.service.store.FulltextSegmentedDocumentService
 import com.example.demo.service.store.UnsegmentedDocumentServiceImpl

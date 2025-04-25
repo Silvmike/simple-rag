@@ -1,6 +1,5 @@
-package com.example.demo.service
+package com.example.demo.util.tx
 
-import com.example.demo.service.api.TxService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

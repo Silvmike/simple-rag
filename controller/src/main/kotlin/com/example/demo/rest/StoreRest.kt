@@ -1,6 +1,6 @@
 package com.example.demo.rest
 
-import com.example.demo.service.store.api.DocumentIdentifier
+import com.example.demo.service.store.api.dto.DocumentIdentifier
 import com.example.demo.service.store.api.UnsegmentedDocumentService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.RequestBody

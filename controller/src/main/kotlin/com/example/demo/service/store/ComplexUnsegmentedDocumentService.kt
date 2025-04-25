@@ -1,13 +1,13 @@
 package com.example.demo.service.store
 
 import com.example.demo.service.api.DomainDocument
-import com.example.demo.service.store.api.CreateDocumentResponse
-import com.example.demo.service.store.api.DocumentIdentifier
-import com.example.demo.service.store.api.IdentifierType
+import com.example.demo.service.store.api.dto.CreateDocumentResponse
+import com.example.demo.service.store.api.dto.DocumentIdentifier
+import com.example.demo.service.store.api.dto.IdentifierType
 import com.example.demo.service.store.api.UnsegmentedDocumentService
 
 class ComplexUnsegmentedDocumentService(
-    val chain: List<UnsegmentedDocumentService>
+    private val chain: List<UnsegmentedDocumentService>
 ) : UnsegmentedDocumentService {
 
     override fun createDocument(domainDocument: DomainDocument): CreateDocumentResponse =

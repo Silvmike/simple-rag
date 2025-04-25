@@ -1,8 +1,8 @@
 package com.example.demo.rest
 
-import com.example.demo.service.store.api.CreateDocumentResponse
+import com.example.demo.service.store.api.dto.CreateDocumentResponse
 import com.example.demo.service.store.api.UnsegmentedDocumentService
-import com.example.demo.service.transform.HtmlDocumentFactory
+import com.example.demo.util.transform.HtmlDocumentFactory
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

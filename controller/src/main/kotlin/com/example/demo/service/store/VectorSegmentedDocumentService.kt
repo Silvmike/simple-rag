@@ -5,10 +5,10 @@ import com.example.demo.dao.DocumentSegmentDao
 import com.example.demo.entity.DocumentEntity
 import com.example.demo.entity.DocumentSegmentEntity
 import com.example.demo.service.api.SegmentedDocument
-import com.example.demo.service.api.TxService
-import com.example.demo.service.store.api.CreateDocumentResponse
-import com.example.demo.service.store.api.DocumentIdentifier
-import com.example.demo.service.store.api.IdentifierType
+import com.example.demo.util.tx.TxService
+import com.example.demo.service.store.api.dto.CreateDocumentResponse
+import com.example.demo.service.store.api.dto.DocumentIdentifier
+import com.example.demo.service.store.api.dto.IdentifierType
 import com.example.demo.service.store.api.SegmentedDocumentService
 import org.springframework.ai.document.Document
 import org.springframework.ai.vectorstore.VectorStore

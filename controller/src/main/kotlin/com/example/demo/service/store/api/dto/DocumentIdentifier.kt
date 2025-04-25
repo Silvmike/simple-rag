@@ -1,4 +1,4 @@
-package com.example.demo.service.store.api
+package com.example.demo.service.store.api.dto
 
 data class DocumentIdentifier(
     val id: String,

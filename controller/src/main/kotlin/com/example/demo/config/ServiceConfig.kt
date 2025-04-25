@@ -4,7 +4,7 @@ import com.example.demo.chat.api.MyChat
 import com.example.demo.util.datetime.DefaultLocalDateTimeProvider
 import com.example.demo.service.query.ChainSimilaritySearchService
 import com.example.demo.service.query.QueryService
-import com.example.demo.service.query.advice.MyChatQueryEnricher
+import com.example.demo.service.query.advice.MyChatPromptAdviceQueryEnricher
 import com.example.demo.service.query.advice.QueryAdvisingSimilaritySearchService
 import com.example.demo.service.query.advice.QueryEnricher
 import com.example.demo.service.query.api.SimilaritySearchService
@@ -38,6 +38,6 @@ class ServiceConfig {
 
     @Bean
     fun queryEnricher(chat: MyChat): QueryEnricher =
-        MyChatQueryEnricher(chat)
+        MyChatPromptAdviceQueryEnricher(chat)
 
 }
