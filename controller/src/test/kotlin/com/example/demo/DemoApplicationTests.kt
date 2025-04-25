@@ -12,6 +12,7 @@ import java.util.concurrent.CountDownLatch
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles(profiles = [
 	TestProfiles.INTTEST,
+	//Profiles.OLLAMA_DEEPSEEK,
 	Profiles.DEEPSEEK,
 	Profiles.FULL_TEXT,
 	Profiles.TEST_CHAT,

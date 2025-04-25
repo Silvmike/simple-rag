@@ -7,5 +7,6 @@ class ChainSimilaritySearchService(
 ) : SimilaritySearchService {
     override fun search(query: String): List<String> =
         chain.flatMap { it.search(query) }
+            .distinct()
 
 }

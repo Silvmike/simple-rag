@@ -1,7 +1,7 @@
 package com.example.demo.config
 
 import com.example.demo.chat.api.MyChat
-import com.example.demo.datetime.DefaultLocalDateTimeProvider
+import com.example.demo.util.datetime.DefaultLocalDateTimeProvider
 import com.example.demo.service.query.ChainSimilaritySearchService
 import com.example.demo.service.query.QueryService
 import com.example.demo.service.query.advice.MyChatQueryEnricher

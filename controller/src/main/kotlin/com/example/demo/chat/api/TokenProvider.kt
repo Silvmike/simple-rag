@@ -1,4 +1,4 @@
-package com.example.demo.chat.oauth.api
+package com.example.demo.chat.api
 
 interface TokenProvider {
 

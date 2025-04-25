@@ -1,4 +1,4 @@
-package com.example.demo.datetime
+package com.example.demo.util.datetime
 
 object DefaultLocalDateTimeProvider : LocalDateTimeProvider {
 

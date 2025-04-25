@@ -1,10 +1,9 @@
 package com.example.demo.chat.oauth
 
-import com.example.demo.chat.oauth.api.AuthKeyProvider
+import com.example.demo.chat.api.TokenProvider
 import com.example.demo.chat.oauth.api.OAuth2Client
 import com.example.demo.chat.oauth.api.OAuthResponse
-import com.example.demo.chat.oauth.api.TokenProvider
-import com.example.demo.datetime.LocalDateTimeProvider
+import com.example.demo.util.datetime.LocalDateTimeProvider
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
@@ -14,7 +13,7 @@ import kotlin.concurrent.withLock
 
 class OAuthTokenProvider(
     private val client: OAuth2Client,
-    private val authKeyProvider: AuthKeyProvider,
+    private val authKeyProvider: TokenProvider,
     private val localDateTimeProvider: LocalDateTimeProvider,
     private val thresholdMs: Long = TimeUnit.MINUTES.toMillis(1)
 ) : TokenProvider {

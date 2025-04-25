@@ -4,7 +4,7 @@ import com.example.demo.chat.giga.api.GigaChatClient
 import com.example.demo.chat.giga.model.Chat
 import com.example.demo.chat.giga.model.ChatCompletion
 import com.example.demo.chat.giga.model.Models
-import com.example.demo.chat.oauth.api.TokenProvider
+import com.example.demo.chat.api.TokenProvider
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue

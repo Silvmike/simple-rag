@@ -32,8 +32,9 @@ class EmbedClientImpl(
                     .header("Accept", "application/json")
                     .POST(
                         BodyPublishers.ofString(
-                        mapper.writeValueAsString(values)
-                    ))
+                            mapper.writeValueAsString(transform(values))
+                        )
+                    )
                     .build(),
                 BodyHandlers.ofInputStream()
             )
@@ -44,4 +45,7 @@ class EmbedClientImpl(
         )
         return list
     }
+
+    // TODO is there default transformer for embedding model?
+    private fun transform(values: List<String>) = values.map { it.lowercase() }
 }

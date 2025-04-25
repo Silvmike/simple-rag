@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Import
 	DbConfig::class,
 	EmbeddingModelClientConfig::class,
 	GigaChatClientConfig::class,
+	OllamaDeepSeekClientConfig::class,
 	DeepSeekClientConfig::class,
 	ServiceConfig::class,
 	FullTextConfig::class,

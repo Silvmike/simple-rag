@@ -93,7 +93,7 @@ Content-Type: application/json
       "must": [
         {
           "query_string": {
-            "query": "Как проверить, работоспособна ли сеть?"
+            "query": "Какие образы виртуальной машины совместимы с KVM?"
           }
         }
       ]

@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory
 import java.io.StringReader
 import java.nio.file.Paths
 
+private const val OPTIMIZED_QUERY_PREFIX = "Оптимизированный запрос: "
+private const val REASON_PREFIX = "Пояснение: "
+
 class MyChatQueryEnricher(
     private val chat: MyChat,
 ) : QueryEnricher {
@@ -34,13 +37,13 @@ class MyChatQueryEnricher(
         StringReader(chat.exchange(generatedRequest)).use {
             val lines = it.readLines()
 
-            val suggestion = lines.filter {
-                it.startsWith("Оптимизированный запрос: ")
-            }.firstOrNull()?.replace("Оптимизированный запрос: ", "") ?: query
+            val suggestion = lines.filter { line ->
+                line.startsWith(OPTIMIZED_QUERY_PREFIX)
+            }.firstOrNull()?.replace(OPTIMIZED_QUERY_PREFIX, "") ?: query
 
-            val reason = lines.filter {
-                it.startsWith("Пояснение: ")
-            }.firstOrNull()?.replace("Пояснение: ", "") ?: ""
+            val reason = lines.filter { line ->
+                line.startsWith(REASON_PREFIX)
+            }.firstOrNull()?.replace(REASON_PREFIX, "") ?: ""
 
             logger.info(
                 "[FULLTEXT OPTIMIZER] Query: [{}], \n\tOptimized query: [{}], \n\tReason: [{}]",

@@ -1,11 +1,7 @@
 package com.example.demo.config
 
 import com.example.demo.app.Profiles
-import com.example.demo.chat.DeepSeekMyChatImpl
-import com.example.demo.chat.EnvironmentTokenProvider
 import com.example.demo.chat.OllamaDeepSeekMyChatImpl
-import com.example.demo.chat.deepseek.DeepSeekClientImpl
-import com.example.demo.chat.deepseek.api.DeepSeekClient
 import com.example.demo.chat.ollama_deepseek.OllamaClientImpl
 import com.example.demo.chat.ollama_deepseek.api.OllamaClient
 import okhttp3.OkHttpClient
@@ -14,22 +10,22 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import java.time.Duration
 
-@Profile(Profiles.DEEPSEEK)
+@Profile(Profiles.OLLAMA_DEEPSEEK)
 @Configuration
-class DeepSeekClientConfig {
+class OllamaDeepSeekClientConfig {
 
     @Bean
-    fun deepSeekClient() = DeepSeekClientImpl(
-        httpClient = OkHttpClient.Builder()
+    fun ollamaDeepSeekClient() = OllamaClientImpl(
+        OkHttpClient.Builder()
             .connectTimeout(Duration.ofSeconds(600))
             .readTimeout(Duration.ofSeconds(600))
             .build(),
-        tokenProvider = EnvironmentTokenProvider("DEEP_SEEK_API_KEY")
+        "http://localhost:11434",
     )
 
     @Bean
     fun myChat(
-        deepSeekClient: DeepSeekClient
-    ) = DeepSeekMyChatImpl(deepSeekClient)
+        ollamaClient: OllamaClient,
+    ) = OllamaDeepSeekMyChatImpl(ollamaClient)
 
 }

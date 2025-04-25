@@ -1,6 +1,9 @@
 package com.example.demo.chat.deepseek
 
-import com.example.demo.chat.deepseek.api.OllamaClient
+import com.example.demo.chat.deepseek.api.DeepSeekClient
+import com.example.demo.chat.deepseek.api.DeepSeekRequest
+import com.example.demo.chat.deepseek.api.DeepSeekResponse
+import com.example.demo.chat.api.TokenProvider
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -11,10 +14,11 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.nio.charset.Charset
 
-class OllamaClientImpl(
+class DeepSeekClientImpl(
     private val httpClient: OkHttpClient,
-    private val baseUrl: String
-) : OllamaClient {
+    private val baseUrl: String = "https://api.deepseek.com",
+    private val tokenProvider: TokenProvider,
+) : DeepSeekClient {
 
     private val mapper = ObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -23,14 +27,15 @@ class OllamaClientImpl(
             JavaTimeModule()
         )
 
-    override fun generate(prompt: String, model: String): OllamaResponse =
+    override fun exchange(request: DeepSeekRequest): DeepSeekResponse {
         httpClient.newCall(
             Request.Builder()
-                .url("$baseUrl/api/generate")
+                .url("$baseUrl/chat/completions")
                 .header("Accept", "application/json")
+                .header("Authorization", "Bearer ${tokenProvider.provide()}")
                 .post(
                     mapper.writeValueAsString(
-                        OllamaRequest(model = model, prompt = prompt)
+                        request
                     ).toRequestBody(
                         "application/json".toMediaTypeOrNull()
                     )
@@ -38,12 +43,13 @@ class OllamaClientImpl(
                 .build()
         ).execute().let {
             if (it.code != 200) {
-                throw IllegalStateException("Giga chat completion returned status ${it.code} ${it.message}")
+                throw IllegalStateException("DeepSeek completion returned status ${it.code} ${it.message}")
             }
-            mapper.readValue(
+            return mapper.readValue(
                 it.body!!.source().readString(Charset.defaultCharset()),
-                OllamaResponse::class.java
+                DeepSeekResponse::class.java
             )
         }
+    }
 
 }

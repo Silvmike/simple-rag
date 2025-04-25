@@ -2,9 +2,10 @@ from fastapi import FastAPI
 from typing import List
 from sentence_transformers import SentenceTransformer
 import uvicorn
+import os
 
 app = FastAPI()
-model = SentenceTransformer('ai-forever/sbert_large_nlu_ru', device='cpu')
+model = SentenceTransformer(os.getenv("EMBEDDING_MODEL"), device='cpu')
 
 @app.post("/embed")
 async def embed(texts: List[str]):

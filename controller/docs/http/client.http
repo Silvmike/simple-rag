@@ -10,7 +10,7 @@ Content-Type: text/html
 POST http://localhost:8080/query
 Content-Type: application/json
 
-"Как проверить работоспособность сети?"
+"Зачем делать дефрагментацию?"
 
 ###
 
@@ -18,5 +18,5 @@ Content-Type: application/json
 POST http://localhost:8080/query/advice
 Content-Type: application/json
 
-"Как проверить открыт ли порт на удалённом сервере?"
+"Как посмотреть настройки ядра?"
 
