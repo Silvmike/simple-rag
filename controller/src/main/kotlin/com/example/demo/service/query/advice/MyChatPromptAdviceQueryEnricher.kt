@@ -2,6 +2,7 @@ package com.example.demo.service.query.advice
 
 import com.example.demo.chat.api.MyChat
 import com.example.demo.util.loadResourceDocument
+import com.example.demo.util.template.TemplateProvider
 import com.google.common.base.Suppliers
 import dev.langchain4j.model.input.PromptTemplate
 import org.slf4j.LoggerFactory
@@ -12,17 +13,13 @@ private const val REASON_PREFIX = "Пояснение: "
 
 class MyChatPromptAdviceQueryEnricher(
     private val chat: MyChat,
-    private val promptTemplateResource: String = "/prompt/template/fulltext_advice.txt"
+    private val promptTemplateProvider: TemplateProvider
 ) : QueryEnricher {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    private val promptDocSupplier = Suppliers.memoize {
-        promptTemplateResource.loadResourceDocument()
-    }
-
     override fun enrich(query: String): String {
-        val promptDoc = promptDocSupplier.get()
+        val promptDoc = promptTemplateProvider.get()!!
         val generatedRequest = PromptTemplate.from(promptDoc.text())
             .apply(mapOf("query" to query)).text()
 

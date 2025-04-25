@@ -2,25 +2,22 @@ package com.example.demo.service.query
 
 import com.example.demo.chat.api.MyChat
 import com.example.demo.service.query.api.SimilaritySearchService
-import com.example.demo.util.loadResourceDocument
-import com.google.common.base.Suppliers
+import com.example.demo.util.template.TemplateProvider
 import dev.langchain4j.model.input.PromptTemplate
 import org.slf4j.LoggerFactory
 
 class QueryService(
     private val similaritySearchService: SimilaritySearchService,
-    private val chat: MyChat
+    private val chat: MyChat,
+    private val queryPromptTemplateProvider: TemplateProvider
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
-    private val promptDocSupplier = Suppliers.memoize {
-        "/prompt/template/query.txt".loadResourceDocument()
-    }
 
     fun query(query: String): String {
         val docs = similaritySearchService.search(query)
 
-        val promptDoc = promptDocSupplier.get()
+        val promptDoc = queryPromptTemplateProvider.get()!!
         val generatedRequest = PromptTemplate.from(promptDoc.text())
             .apply(
                 mapOf("query" to query, "context" to toSources(docs))

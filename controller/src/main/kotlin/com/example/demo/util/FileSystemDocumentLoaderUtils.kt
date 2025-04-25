@@ -2,6 +2,7 @@ package com.example.demo.util
 
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.document.loader.FileSystemDocumentLoader
+import java.nio.file.Path
 import java.nio.file.Paths
 
 fun String.loadResourceDocument(): Document =
@@ -10,3 +11,6 @@ fun String.loadResourceDocument(): Document =
             javaClass.getResource(this)?.toURI() ?: throw RuntimeException("File not found!")
         )
     )
+
+fun Path.loadResourceDocument(): Document =
+    FileSystemDocumentLoader.loadDocument(this)
