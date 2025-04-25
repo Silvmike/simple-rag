@@ -2,11 +2,10 @@ package com.example.demo.service.query
 
 import com.example.demo.chat.api.MyChat
 import com.example.demo.service.query.api.SimilaritySearchService
+import com.example.demo.util.loadResourceDocument
 import com.google.common.base.Suppliers
-import dev.langchain4j.data.document.loader.FileSystemDocumentLoader
 import dev.langchain4j.model.input.PromptTemplate
 import org.slf4j.LoggerFactory
-import java.nio.file.Paths
 
 class QueryService(
     private val similaritySearchService: SimilaritySearchService,
@@ -15,13 +14,7 @@ class QueryService(
 
     private val logger = LoggerFactory.getLogger(javaClass)
     private val promptDocSupplier = Suppliers.memoize {
-        FileSystemDocumentLoader.loadDocument(
-            Paths.get(
-                javaClass.getResource(
-                    "/prompt/template/query.txt"
-                )?.toURI() ?: throw RuntimeException("file not found!")
-            )
-        )
+        "/prompt/template/query.txt".loadResourceDocument()
     }
 
     fun query(query: String): String {
