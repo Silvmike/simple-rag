@@ -1,6 +1,10 @@
 package com.example.demo.config
 
 import com.example.demo.chat.api.MyChat
+import com.example.demo.parameters.ApplicationParameters
+import com.example.demo.parameters.FileSystemWatchedApplicationParameters
+import com.example.demo.parameters.SimpleApplicationParameters
+import com.example.demo.reranker.api.RerankerClient
 import com.example.demo.service.query.ChainSimilaritySearchService
 import com.example.demo.service.query.QueryService
 import com.example.demo.service.query.advice.MyChatPromptAdviceQueryEnricher
@@ -25,6 +29,8 @@ private const val QUERY_PROMPT_BEAN_NAME = "queryPromptTemplateProvider"
 private const val FULL_TEXT_ADVICE_CLASSPATH = "/prompt/template/fulltext_advice.txt"
 private const val QUERY_PROMPT_CLASSPATH = "/prompt/template/query.txt"
 
+private const val APPLICATION_PARAMETERS_CLASSPATH = "/application_parameters.properties"
+
 @Import(value = [
     DbConfig::class,
     VectorConfig::class,
@@ -41,18 +47,22 @@ class ServiceConfig {
         chain: List<SimilaritySearchService>,
         chat: MyChat,
         queryEnricher: QueryEnricher,
-        @Qualifier(QUERY_PROMPT_BEAN_NAME) provider: TemplateProvider
+        rerankerClient: RerankerClient,
+        @Qualifier(QUERY_PROMPT_BEAN_NAME) provider: TemplateProvider,
+        params: ApplicationParameters
     ) = QueryService(
         similaritySearchService = QueryAdvisingSimilaritySearchService(
             delegate = ChainSimilaritySearchService(chain),
             queryEnricher = queryEnricher
         ),
+        reranker = rerankerClient,
         chat = chat,
         queryPromptTemplateProvider =
             FallbackTemplateProvider(
                 main = provider,
                 fallback = ResourceTemplateProvider(QUERY_PROMPT_CLASSPATH)
-            )
+            ),
+        applicationParameters = params
     )
 
     @Bean(QUERY_PROMPT_BEAN_NAME)
@@ -70,6 +80,16 @@ class ServiceConfig {
                     fallback = ResourceTemplateProvider(FULL_TEXT_ADVICE_CLASSPATH)
                 )
         )
+
+    @Bean
+    fun watchedApplicationParameters() = FileSystemWatchedApplicationParameters(
+        ClassPathResource(APPLICATION_PARAMETERS_CLASSPATH),
+        SimpleApplicationParameters(
+            fullTextSearchMaxResults = 10,
+            vectorSearchMaxResults = 30,
+            rerankerMaxResults = 3
+        )
+    )
 
     @Bean(ADVICE_QUERY_PROMPT_BEAN_NAME)
     fun watchedQueryEnricherPromptProvider() = FileSystemWatchedTemplateProvider(

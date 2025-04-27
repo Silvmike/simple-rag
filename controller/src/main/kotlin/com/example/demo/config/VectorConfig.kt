@@ -3,6 +3,7 @@ package com.example.demo.config
 import com.example.demo.app.Profiles
 import com.example.demo.dao.DocumentDao
 import com.example.demo.dao.DocumentSegmentDao
+import com.example.demo.parameters.ApplicationParameters
 import com.example.demo.util.tx.TxService
 import com.example.demo.service.query.LoggingSimilaritySearchService
 import com.example.demo.service.query.VectorStoreSimilaritySearchService
@@ -32,7 +33,7 @@ class VectorConfig {
     ) = UnsegmentedDocumentServiceImpl(BaseSegmenter(maxChars = 2048, maxOverlapChars = 32), segmentedDocumentService)
 
     @Bean
-    fun vectorSimilaritySearchService(vectorStore: VectorStore) =
-        LoggingSimilaritySearchService(VectorStoreSimilaritySearchService(vectorStore))
+    fun vectorSimilaritySearchService(vectorStore: VectorStore, params: ApplicationParameters) =
+        LoggingSimilaritySearchService(VectorStoreSimilaritySearchService(vectorStore, params))
 
 }

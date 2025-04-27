@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Import
 	GigaChatClientConfig::class,
 	OllamaDeepSeekClientConfig::class,
 	DeepSeekClientConfig::class,
+	RerankerClientConfig::class,
 	ServiceConfig::class,
 	FullTextConfig::class,
 	RestConfig::class

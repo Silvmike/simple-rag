@@ -25,6 +25,7 @@ import java.util.concurrent.CountDownLatch
 		VectorStoreContainer::class,
 		EmbedContainer::class,
 		DeepSeekContainer::class,
+		RerankerContainer::class,
 		MyOpenSearchContainer::class
 	]
 )

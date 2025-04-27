@@ -10,7 +10,7 @@ Content-Type: text/html
 POST http://localhost:8080/query
 Content-Type: application/json
 
-"Зачем делать дефрагментацию?"
+"Как посмотреть настройки ядра?"
 
 ###
 

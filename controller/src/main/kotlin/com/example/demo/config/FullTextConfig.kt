@@ -3,6 +3,7 @@ package com.example.demo.config
 import com.example.demo.app.Profiles
 import com.example.demo.opensearch.UnsafeOpenSearchClientFactory
 import com.example.demo.opensearch.startup.PrepareOpenSearchIndex
+import com.example.demo.parameters.ApplicationParameters
 import com.example.demo.service.query.FullTextSimilaritySearchService
 import com.example.demo.service.query.LoggingSimilaritySearchService
 import com.example.demo.service.segmentation.BaseSegmenter
@@ -39,7 +40,8 @@ class FullTextConfig {
     )
 
     @Bean
-    fun fullTextSimilaritySearchService(client: OpenSearchClient) =
-        LoggingSimilaritySearchService(FullTextSimilaritySearchService(client))
+    fun fullTextSimilaritySearchService(
+        client: OpenSearchClient, params: ApplicationParameters) =
+        LoggingSimilaritySearchService(FullTextSimilaritySearchService(client, params))
 
 }
