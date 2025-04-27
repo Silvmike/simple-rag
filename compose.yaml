@@ -36,9 +36,18 @@ services:
     build: ./embed
     image: test-embed
     ports:
-      - 8000:8000
+      - "8000:8000"
     expose:
       - 8000
+    networks:
+      - common
+  reranker:
+    build: ./reranker
+    image: test-reranker
+    ports:
+      - "8001:8001"
+    expose:
+      - 8001
     networks:
       - common
   qdrant:
