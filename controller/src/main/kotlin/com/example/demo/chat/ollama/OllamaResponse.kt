@@ -1,4 +1,4 @@
-package com.example.demo.chat.ollama_deepseek
+package com.example.demo.chat.ollama
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.ZonedDateTime

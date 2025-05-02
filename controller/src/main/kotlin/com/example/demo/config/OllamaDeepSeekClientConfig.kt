@@ -1,16 +1,17 @@
 package com.example.demo.config
 
 import com.example.demo.app.Profiles
-import com.example.demo.chat.OllamaDeepSeekMyChatImpl
-import com.example.demo.chat.ollama_deepseek.OllamaClientImpl
-import com.example.demo.chat.ollama_deepseek.api.OllamaClient
+import com.example.demo.chat.OllamaMyChatImpl
+import com.example.demo.chat.ollama.OllamaClientImpl
+import com.example.demo.chat.ollama.api.OllamaClient
 import okhttp3.OkHttpClient
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import java.time.Duration
 
-@Profile(Profiles.OLLAMA_DEEPSEEK)
+@Profile(Profiles.OLLAMA_CHAT)
 @Configuration
 class OllamaDeepSeekClientConfig {
 
@@ -26,6 +27,8 @@ class OllamaDeepSeekClientConfig {
     @Bean
     fun myChat(
         ollamaClient: OllamaClient,
-    ) = OllamaDeepSeekMyChatImpl(ollamaClient)
+        @Value("\${ollama.model}")
+        model: String
+    ) = OllamaMyChatImpl(ollamaClient, model)
 
 }

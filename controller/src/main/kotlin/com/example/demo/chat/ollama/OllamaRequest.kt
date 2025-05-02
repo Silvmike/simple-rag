@@ -1,4 +1,4 @@
-package com.example.demo.chat.ollama_deepseek
+package com.example.demo.chat.ollama
 
 data class OllamaRequest(
     val model: String,

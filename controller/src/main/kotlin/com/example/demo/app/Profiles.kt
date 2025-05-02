@@ -7,6 +7,8 @@ object Profiles {
     const val VECTOR = "VECTOR"
     const val FULL_TEXT = "FULL_TEXT"
     const val TEST_CHAT = "TEST_CHAT"
-    const val OLLAMA_DEEPSEEK = "OLLAMA_DEEPSEEK"
+    const val OLLAMA_CHAT = "OLLAMA_CHAT"
+    const val OLLAMA_DEEPSEEK = "OLLAMA_SAIGA"
+    const val OLLAMA_SAIGA = "OLLAMA_SAIGA"
     const val DEEPSEEK = "DEEPSEEK"
 }

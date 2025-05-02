@@ -1,0 +1,12 @@
+# @timeout 6000
+POST http://localhost:11434/api/generate
+Content-Type: application/json
+Accept: application/json
+
+{
+  "model": "ilyagusev/saiga_llama3",
+  "prompt": "Почему небо синее? Если не знаешь ответ, выведи searchGoogle(запрос пользователя)",
+  "stream": false
+}
+
+###

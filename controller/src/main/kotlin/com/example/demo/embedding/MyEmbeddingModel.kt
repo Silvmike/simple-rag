@@ -23,5 +23,5 @@ class MyEmbeddingModel(
     override fun embed(document: Document): FloatArray =
         client.embed(listOf(document.formattedContent))[0].toFloatArray()
 
-    override fun dimensions(): Int = 1024
+    override fun dimensions(): Int = client.dimensions()
 }

@@ -1,6 +1,6 @@
-package com.example.demo.chat.ollama_deepseek
+package com.example.demo.chat.ollama
 
-import com.example.demo.chat.ollama_deepseek.api.OllamaClient
+import com.example.demo.chat.ollama.api.OllamaClient
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule

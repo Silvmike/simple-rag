@@ -3,11 +3,8 @@ package com.example.demo.config
 import com.example.demo.app.Profiles
 import com.example.demo.chat.DeepSeekMyChatImpl
 import com.example.demo.chat.EnvironmentTokenProvider
-import com.example.demo.chat.OllamaDeepSeekMyChatImpl
 import com.example.demo.chat.deepseek.DeepSeekClientImpl
 import com.example.demo.chat.deepseek.api.DeepSeekClient
-import com.example.demo.chat.ollama_deepseek.OllamaClientImpl
-import com.example.demo.chat.ollama_deepseek.api.OllamaClient
 import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

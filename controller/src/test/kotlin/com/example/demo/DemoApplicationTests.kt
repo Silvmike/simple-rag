@@ -12,8 +12,11 @@ import java.util.concurrent.CountDownLatch
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles(profiles = [
 	TestProfiles.INTTEST,
+	Profiles.OLLAMA_CHAT,
+	Profiles.OLLAMA_SAIGA,
+	//Profiles.DEEPSEEK,
 	//Profiles.OLLAMA_DEEPSEEK,
-	Profiles.DEEPSEEK,
+	//Profiles.GIGACHAT,
 	Profiles.FULL_TEXT,
 	Profiles.TEST_CHAT,
 	Profiles.VECTOR
@@ -24,7 +27,8 @@ import java.util.concurrent.CountDownLatch
 		DatabaseContainer::class,
 		VectorStoreContainer::class,
 		EmbedContainer::class,
-		DeepSeekContainer::class,
+		//DeepSeekContainer::class,
+		SaigaContainer::class,
 		RerankerContainer::class,
 		MyOpenSearchContainer::class
 	]

@@ -10,7 +10,7 @@ Content-Type: text/html
 POST http://localhost:8080/query
 Content-Type: application/json
 
-"Как посмотреть настройки ядра?"
+"Как определить какие параметры ядра заданы в настоящее время?"
 
 ###
 

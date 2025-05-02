@@ -14,6 +14,7 @@ import java.net.http.HttpResponse.BodyHandlers
 
 class EmbedClientImpl(
     private val httpClient: HttpClient,
+    private val dimensions: Int = 1024,
     private val urlProvider: UrlProvider
 ): EmbedClient {
 
@@ -23,7 +24,7 @@ class EmbedClientImpl(
     private val floatList = TypeFactory.defaultInstance()
         .constructType(object : TypeReference<MutableList<MutableList<Float>>>() {})
 
-    override fun embed(values: List<String>): List<List<Float>> {
+    override fun embed(documents: List<String>): List<List<Float>> {
         val response = httpClient
             .send(
                 HttpRequest.newBuilder()
@@ -32,7 +33,7 @@ class EmbedClientImpl(
                     .header("Accept", "application/json")
                     .POST(
                         BodyPublishers.ofString(
-                            mapper.writeValueAsString(transform(values))
+                            mapper.writeValueAsString(transform(documents))
                         )
                     )
                     .build(),
@@ -45,6 +46,8 @@ class EmbedClientImpl(
         )
         return list
     }
+
+    override fun dimensions(): Int = dimensions
 
     // TODO is there default transformer for embedding model?
     private fun transform(values: List<String>) = values.map { it.lowercase() }

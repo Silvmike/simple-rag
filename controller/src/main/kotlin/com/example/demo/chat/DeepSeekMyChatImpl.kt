@@ -4,7 +4,6 @@ import com.example.demo.chat.api.MyChat
 import com.example.demo.chat.deepseek.api.DeepSeekClient
 import com.example.demo.chat.deepseek.api.DeepSeekRequest
 import com.example.demo.chat.deepseek.api.Message
-import com.example.demo.chat.ollama_deepseek.api.OllamaClient
 
 class DeepSeekMyChatImpl(
     private val client: DeepSeekClient
