@@ -1,1 +1,4 @@
-ollama.model: deepseek-r1:7b
+options:
+  ollama:
+    enabled: true
+    model: deepseek-r1:7b

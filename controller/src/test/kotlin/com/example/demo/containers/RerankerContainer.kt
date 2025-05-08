@@ -24,6 +24,11 @@ class RerankerContainer :
     }
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
+
+        if (applicationContext.environment.getProperty("options.query-service.enabled") == "false") {
+            return
+        }
+
         start()
     }
 

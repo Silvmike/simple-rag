@@ -1,17 +1,20 @@
 package com.example.demo.config
 
-import com.example.demo.app.Profiles
 import com.example.demo.chat.DeepSeekMyChatImpl
 import com.example.demo.chat.EnvironmentTokenProvider
 import com.example.demo.chat.deepseek.DeepSeekClientImpl
 import com.example.demo.chat.deepseek.api.DeepSeekClient
 import okhttp3.OkHttpClient
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import java.time.Duration
 
-@Profile(Profiles.DEEPSEEK)
+@ConditionalOnProperty(
+    name = ["options.model.deep-seek.enabled"],
+    havingValue = "true",
+    matchIfMissing = false
+)
 @Configuration
 class DeepSeekClientConfig {
 

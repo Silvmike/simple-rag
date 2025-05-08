@@ -1,22 +1,25 @@
 package com.example.demo.config
 
-import com.example.demo.app.Profiles
 import com.example.demo.chat.OllamaMyChatImpl
 import com.example.demo.chat.ollama.OllamaClientImpl
 import com.example.demo.chat.ollama.api.OllamaClient
+import com.example.demo.config.properties.Options
 import okhttp3.OkHttpClient
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import java.time.Duration
 
-@Profile(Profiles.OLLAMA_CHAT)
+@ConditionalOnProperty(
+    name = ["options.model.ollama.enabled"],
+    havingValue = "true",
+    matchIfMissing = false
+)
 @Configuration
-class OllamaDeepSeekClientConfig {
+class OllamaClientConfig {
 
     @Bean
-    fun ollamaDeepSeekClient() = OllamaClientImpl(
+    fun ollamaClient() = OllamaClientImpl(
         OkHttpClient.Builder()
             .connectTimeout(Duration.ofSeconds(600))
             .readTimeout(Duration.ofSeconds(600))
@@ -27,8 +30,7 @@ class OllamaDeepSeekClientConfig {
     @Bean
     fun myChat(
         ollamaClient: OllamaClient,
-        @Value("\${ollama.model}")
-        model: String
-    ) = OllamaMyChatImpl(ollamaClient, model)
+        options: Options
+    ) = OllamaMyChatImpl(ollamaClient, options.model.ollama.name)
 
 }

@@ -16,3 +16,23 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: create
+
+options:
+  jdbc:
+    enabled: false
+  query-service:
+    enabled: false
+  vector-search:
+    enabled: false
+  full-text-search:
+    enabled: false
+  test-chat:
+    enabled: true
+  model:
+    deep-seek:
+      enabled: false
+    giga-chat:
+      enabled: false
+    ollama:
+      name: deepseek-r1:7b
+      enabled: true

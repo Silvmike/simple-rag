@@ -11,14 +11,12 @@ import com.example.demo.service.query.advice.MyChatPromptAdviceQueryEnricher
 import com.example.demo.service.query.advice.QueryAdvisingSimilaritySearchService
 import com.example.demo.service.query.advice.QueryEnricher
 import com.example.demo.service.query.api.SimilaritySearchService
-import com.example.demo.util.datetime.DefaultLocalDateTimeProvider
-import com.example.demo.util.file.DirectoryObserved
-import com.example.demo.util.file.SelfStartedFileAlterationMonitor
 import com.example.demo.util.template.FallbackTemplateProvider
 import com.example.demo.util.template.FileSystemWatchedTemplateProvider
 import com.example.demo.util.template.ResourceTemplateProvider
 import com.example.demo.util.template.TemplateProvider
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -31,16 +29,19 @@ private const val QUERY_PROMPT_CLASSPATH = "/prompt/template/query.txt"
 
 private const val APPLICATION_PARAMETERS_CLASSPATH = "/application_parameters.properties"
 
+@ConditionalOnProperty(
+    name = ["options.query.enabled"],
+    havingValue = "true",
+    matchIfMissing = false
+)
 @Import(value = [
-    DbConfig::class,
+    QueryRestConfig::class,
+    RerankerClientConfig::class,
     VectorConfig::class,
     FullTextConfig::class
 ])
 @Configuration
-class ServiceConfig {
-
-    @Bean
-    fun localDateTimeProvider() = DefaultLocalDateTimeProvider
+class QueryServiceConfig {
 
     @Bean
     fun queryService(
@@ -95,9 +96,5 @@ class ServiceConfig {
     fun watchedQueryEnricherPromptProvider() = FileSystemWatchedTemplateProvider(
         ClassPathResource(FULL_TEXT_ADVICE_CLASSPATH)
     )
-
-    @Bean
-    fun selfStartedFileAlterationMonitor(observed: List<DirectoryObserved>) =
-        SelfStartedFileAlterationMonitor(observed)
 
 }

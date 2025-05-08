@@ -11,6 +11,11 @@ class MyOpenSearchContainer :
     ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
+
+        if (applicationContext.environment.getProperty("options.full-text-search.enabled") == "false") {
+            return
+        }
+
         addFixedExposedPort(9200, 9200)
         start()
     }

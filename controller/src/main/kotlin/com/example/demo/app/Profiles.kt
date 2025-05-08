@@ -11,4 +11,5 @@ object Profiles {
     const val OLLAMA_DEEPSEEK = "OLLAMA_SAIGA"
     const val OLLAMA_SAIGA = "OLLAMA_SAIGA"
     const val DEEPSEEK = "DEEPSEEK"
+    const val CHAT_ONLY = "CHAT_ONLY"
 }

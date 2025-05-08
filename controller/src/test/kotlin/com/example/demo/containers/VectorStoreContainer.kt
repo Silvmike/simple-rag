@@ -19,6 +19,11 @@ class VectorStoreContainer :
     }
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
+
+        if (applicationContext.environment.getProperty("options.vector-search.enabled") == "false") {
+            return
+        }
+
         start()
         TestPropertyValues.of(
             "spring.ai.vectorstore.qdrant.host=localhost",

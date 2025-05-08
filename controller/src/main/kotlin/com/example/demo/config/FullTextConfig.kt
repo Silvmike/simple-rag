@@ -1,6 +1,5 @@
 package com.example.demo.config
 
-import com.example.demo.app.Profiles
 import com.example.demo.opensearch.UnsafeOpenSearchClientFactory
 import com.example.demo.opensearch.startup.PrepareOpenSearchIndex
 import com.example.demo.parameters.ApplicationParameters
@@ -12,11 +11,17 @@ import com.example.demo.service.store.UnsegmentedDocumentServiceImpl
 import org.apache.hc.core5.http.HttpHost
 import org.opensearch.client.opensearch.OpenSearchClient
 import org.opensearch.client.transport.OpenSearchTransport
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
+import org.springframework.context.annotation.Import
 
-@Profile(Profiles.FULL_TEXT)
+@ConditionalOnProperty(
+    name = ["options.full-text-search.enabled"],
+    havingValue = "true",
+    matchIfMissing = true
+)
+@Import(FullTextRestConfig::class)
 @Configuration
 class FullTextConfig {
 

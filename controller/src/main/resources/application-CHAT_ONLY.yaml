@@ -1,0 +1,18 @@
+options:
+  jdbc:
+    enabled: false
+  test-chat:
+    enabled: true
+  query-service:
+    enabled: false
+  vector-search:
+    enabled: false
+  full-text-search:
+    enabled: false
+  model:
+    deep-seek:
+      enabled: false
+    giga-chat:
+      enabled: false
+    ollama:
+      enabled: true

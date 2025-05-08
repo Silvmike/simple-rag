@@ -23,6 +23,14 @@ class DeepSeekContainer :
     }
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
+
+        if (applicationContext.environment.getProperty("options.model.ollama.enabled") != "true") {
+            return
+        }
+        if (applicationContext.environment.getProperty("options.model.ollama.name") != "deepseek-r1:7b") {
+            return
+        }
+
         start()
     }
 

@@ -23,6 +23,14 @@ class SaigaContainer :
     }
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
+
+        if (applicationContext.environment.getProperty("options.model.ollama.enabled") != "true") {
+            return
+        }
+        if (applicationContext.environment.getProperty("options.model.ollama.name") != "ilyagusev/saiga_llama3") {
+            return
+        }
+
         start()
     }
 

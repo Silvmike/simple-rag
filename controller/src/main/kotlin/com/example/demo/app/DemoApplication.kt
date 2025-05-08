@@ -7,15 +7,14 @@ import org.springframework.context.annotation.Import
 
 @SpringBootApplication
 @Import(value = [
-	DbConfig::class,
-	EmbeddingModelClientConfig::class,
 	GigaChatClientConfig::class,
-	OllamaDeepSeekClientConfig::class,
+	OllamaClientConfig::class,
 	DeepSeekClientConfig::class,
-	RerankerClientConfig::class,
-	ServiceConfig::class,
-	FullTextConfig::class,
-	RestConfig::class
+	CommonConfig::class,
+	QueryServiceConfig::class,
+	CommonRestConfig::class,
+	DisableJpaConfiguration::class,
+	DisableQdrantConfiguration::class
 ])
 class DemoApplication
 

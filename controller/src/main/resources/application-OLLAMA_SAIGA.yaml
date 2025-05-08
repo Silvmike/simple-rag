@@ -1,1 +1,4 @@
-ollama.model: ilyagusev/saiga_llama3
+options:
+  ollama:
+    enabled: true
+    model: ilyagusev/saiga_llama3
