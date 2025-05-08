@@ -1,6 +1,8 @@
-package com.example.demo.config
+package com.example.demo.config.query
 
 import com.example.demo.chat.api.MyChat
+import com.example.demo.config.query.fulltext.FullTextConfig
+import com.example.demo.config.query.vector.VectorConfig
 import com.example.demo.parameters.ApplicationParameters
 import com.example.demo.parameters.FileSystemWatchedApplicationParameters
 import com.example.demo.parameters.SimpleApplicationParameters

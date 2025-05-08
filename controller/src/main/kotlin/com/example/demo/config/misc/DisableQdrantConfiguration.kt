@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.misc
 
 import org.springframework.ai.vectorstore.qdrant.autoconfigure.QdrantVectorStoreAutoConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

@@ -1,6 +1,12 @@
 package com.example.demo.app
 
 import com.example.demo.config.*
+import com.example.demo.config.misc.DisableJpaConfiguration
+import com.example.demo.config.misc.DisableQdrantConfiguration
+import com.example.demo.config.model.DeepSeekClientConfig
+import com.example.demo.config.model.GigaChatClientConfig
+import com.example.demo.config.model.OllamaClientConfig
+import com.example.demo.config.query.QueryServiceConfig
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import

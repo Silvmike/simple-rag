@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.model
 
 import com.example.demo.chat.EnvironmentTokenProvider
 import com.example.demo.chat.GigaChatMyChatImpl

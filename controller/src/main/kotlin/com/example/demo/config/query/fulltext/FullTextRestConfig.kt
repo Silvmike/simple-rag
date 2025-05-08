@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.query.fulltext
 
 import com.example.demo.rest.FullTextAdviceRest
 import com.example.demo.service.query.advice.QueryEnricher

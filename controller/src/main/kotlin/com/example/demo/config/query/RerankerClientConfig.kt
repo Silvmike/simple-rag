@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.query
 
 import com.example.demo.reranker.RerankerClientImpl
 import org.springframework.beans.factory.annotation.Qualifier

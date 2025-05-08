@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.query.vector
 
 import com.example.demo.util.tx.TxServiceImpl
 import org.springframework.context.annotation.Bean
@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import javax.sql.DataSource
-
 
 @Configuration
 @EnableJpaRepositories(basePackages = ["com.example.demo.dao"])

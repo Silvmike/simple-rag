@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.misc
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty

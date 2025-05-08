@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.query
 
 import com.example.demo.rest.QueryRest
 import com.example.demo.service.query.QueryService

@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.query.fulltext
 
 import com.example.demo.opensearch.UnsafeOpenSearchClientFactory
 import com.example.demo.opensearch.startup.PrepareOpenSearchIndex
@@ -46,7 +46,8 @@ class FullTextConfig {
 
     @Bean
     fun fullTextSimilaritySearchService(
-        client: OpenSearchClient, params: ApplicationParameters) =
+        client: OpenSearchClient, params: ApplicationParameters
+    ) =
         LoggingSimilaritySearchService(FullTextSimilaritySearchService(client, params))
 
 }

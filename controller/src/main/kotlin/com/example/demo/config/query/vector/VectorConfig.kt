@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.config.query.vector
 
 import com.example.demo.dao.DocumentDao
 import com.example.demo.dao.DocumentSegmentDao
