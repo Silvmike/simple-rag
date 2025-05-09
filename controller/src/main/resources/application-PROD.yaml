@@ -17,3 +17,22 @@ spring:
     url: jdbc:postgresql://localhost:5432/test
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+options:
+  jdbc:
+    enabled: true
+  test-chat:
+    enabled: false
+  query-service:
+    enabled: true
+  vector-search:
+    enabled: true
+  full-text-search:
+    enabled: true
+  model:
+    deep-seek:
+      enabled: true
+    giga-chat:
+      enabled: false
+    ollama:
+      enabled: false

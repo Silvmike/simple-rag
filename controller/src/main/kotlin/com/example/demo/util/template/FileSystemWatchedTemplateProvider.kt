@@ -14,7 +14,7 @@ private val NULL_DOCUMENT = Document("null")
 
 class FileSystemWatchedTemplateProvider(
     path: Path
-) : FileSystemWatched<Document?>(path), TemplateProvider, DirectoryObserved, PathAlterationListener {
+) : FileSystemWatched<Document?>(path), TemplateProvider {
 
     constructor(resource: Resource): this(
         Paths.get(resource.uri.path)
