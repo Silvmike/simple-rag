@@ -3,14 +3,10 @@ package com.example.demo.search_engines.yandex
 import com.example.demo.config.properties.Options
 import com.google.common.base.Suppliers
 import okio.withLock
-import org.apache.commons.io.FileUtils
-import org.jsoup.Jsoup
-import org.openqa.selenium.*
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
-import org.openqa.selenium.support.ui.WebDriverWait
-import java.io.File
-import java.time.Duration
 import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Supplier
 
@@ -69,56 +65,13 @@ class YandexSearchClient(
         mutex.withLock {
             val driver = driverSupplier.get()
             try {
-                val webDriverWait = WebDriverWait(driver, Duration.ofSeconds(30L))
-                driver.navigate().to("about:blank")
-
-                driver.get("https://ya.ru/")
-                webDriverWait.waitPageReadyState()
-
-                driver.findElement(By.xpath("//*[@id=\"text\"]")).apply {
-                    sendKeys(query)
-                }
-
-                driver.findElement(By.cssSelector("button.search3__button")).apply {
-                    click()
-                }
-                webDriverWait.waitPageReadyState()
-
-                return driver.findElements(By.xpath("//*[@id=\"search-result\"]/li[@data-fast=\"1\"]"))
-                    .filter { searchResultListItem -> searchResultListItem.getAttribute("data-fast-name") == null }
-                    .map { searchResultListItem ->
-                        val document = Jsoup.parse(searchResultListItem.getAttribute("innerHTML")!!)
-                        val url = document.select("div.organic__title-wrapper > a:nth-child(1)").attr("href")
-                        val shortDescription =
-                            document.select("div.organic__content-wrapper > div.organic__text").text()
-                        SearchResult(
-                            url = url,
-                            shortDescription = shortDescription
-                        )
-                    }
+                return YandexStartPage.open(driver)
+                    .search(query)
+                    .getResults()
             } finally {
                 if (closeable) {
                     driver.close()
                 }
-            }
-        }
-    }
-
-    private fun WebDriverWait.waitPageReadyState() {
-        until { webDriver: WebDriver ->
-            try {
-                val ready =
-                    (webDriver as JavascriptExecutor).executeScript("return !!document['readyState'];") as Boolean
-
-                if (ready) {
-                    webDriver.findElements(By.className("search3__input-inner-container")).stream()
-                        .forEach { div: WebElement -> div.isDisplayed }
-                    true
-                } else {
-                    false
-                }
-            } catch (e: WebDriverException) {
-                false
             }
         }
     }
