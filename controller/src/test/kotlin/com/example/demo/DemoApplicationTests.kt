@@ -36,7 +36,6 @@ class DemoApplicationTests {
 	fun contextLoads() {
 
 		println(yandexSearchClient.query("Кто такой винни-пух?"))
-		println(yandexSearchClient.query("Кто такой винни-пух 2?"))
 
 		CountDownLatch(1).await()
 	}

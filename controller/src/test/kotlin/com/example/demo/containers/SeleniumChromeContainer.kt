@@ -31,7 +31,7 @@ class SeleniumChromeContainer :
         start()
 
         TestPropertyValues.of(
-            "selenium.chrome.driver.hub.url=http://127.0.0.1:4444/wd/hub",
+            "options.yandex-search-client.driver.hubUrl=http://127.0.0.1:4444/wd/hub",
         ).applyTo(applicationContext.environment)
     }
 
