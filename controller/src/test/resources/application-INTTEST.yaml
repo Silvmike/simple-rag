@@ -42,4 +42,4 @@ options:
       local: false
       # requires downloadDriver task execution
       location: ./driver/chromedriver-linux64/chromedriver
-      headless: false
+      headless: true

@@ -3,11 +3,13 @@ package com.example.demo.search_engines.yandex
 import com.example.demo.config.properties.Options
 import com.google.common.base.Suppliers
 import okio.withLock
+import org.apache.commons.io.FileUtils
 import org.jsoup.Jsoup
 import org.openqa.selenium.*
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.WebDriverWait
+import java.io.File
 import java.time.Duration
 import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Supplier
@@ -34,9 +36,19 @@ class YandexSearchClient(
         if (options.yandexSearchClient.driver.local) {
             Supplier {
                 val chromeOptions = ChromeOptions()
-                val arguments = mutableListOf("--no-sandbox")
+                val arguments = mutableListOf(
+                    "--no-sandbox",
+                    "--no-first-run",
+                    "--disable-translate",
+                    "--disable-extensions",
+                    "--disable-default-apps",
+                    "--disable-sync",
+                    "--disable-background-networking",
+                    "--disable-setuid-sandbox",
+                    "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36"
+                )
                 if (options.yandexSearchClient.driver.headless) {
-                    arguments.add("--headless=new")
+                    arguments.add("--headless")
                 }
                 chromeOptions.addArguments(arguments)
                 ChromeDriver(chromeOptions).apply {
