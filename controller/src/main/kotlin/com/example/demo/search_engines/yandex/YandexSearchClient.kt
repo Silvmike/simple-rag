@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Supplier
 
 /**
- * For the sake of demo.
+ * For the sake of demo: doesn't pass captcha protection.
  * TODO implement similarity service based on the client.
  */
 class YandexSearchClient(
