@@ -2,33 +2,32 @@ package com.example.demo.config.properties
 
 import com.example.demo.config.properties.options.*
 import com.example.demo.config.properties.options.model.ModelsOptions
+import com.example.demo.config.properties.options.yandex_search.YandexSearchClientOptions
 import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.NestedConfigurationProperty
 
 @ConfigurationProperties("options")
 class Options {
 
+    @NestedConfigurationProperty
     var jdbc: JdbcOptions = JdbcOptions()
-        @ConfigurationProperties("jdbc")
-        set
 
+    @NestedConfigurationProperty
+    var yandexSearchClient: YandexSearchClientOptions = YandexSearchClientOptions()
+
+    @NestedConfigurationProperty
     var testChat: TestChatOptions = TestChatOptions()
-        @ConfigurationProperties("test-chat")
-        set
 
+    @NestedConfigurationProperty
     var queryService: QueryServiceOptions = QueryServiceOptions()
-        @ConfigurationProperties("query-service")
-        set
 
+    @NestedConfigurationProperty
     var vectorSearch: VectorSearchOptions = VectorSearchOptions()
-        @ConfigurationProperties("vector-search")
-        set
 
+    @NestedConfigurationProperty
     var fullTextSearch: FullTextSearchOptions = FullTextSearchOptions()
-        @ConfigurationProperties("full-text-search")
-        set
 
+    @NestedConfigurationProperty
     var model: ModelsOptions = ModelsOptions()
-        @ConfigurationProperties("model")
-        set
 
 }

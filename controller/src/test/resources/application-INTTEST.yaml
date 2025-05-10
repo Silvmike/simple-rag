@@ -30,9 +30,17 @@ options:
     enabled: true
   model:
     deep-seek:
-      enabled: false
+      enabled: true
     giga-chat:
       enabled: false
     ollama:
       name: deepseek-r1:7b
-      enabled: true
+      enabled: false
+  yandex-search-client:
+    enabled: true
+    driver:
+      local: true
+      # requires downloadDriver task execution
+      location: ./driver/chromedriver-linux64/chromedriver
+      headless: false
+      hubUrl: http://localhost:4444/wd/hub

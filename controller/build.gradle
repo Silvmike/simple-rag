@@ -27,7 +27,8 @@ repositories {
 }
 
 ext {
-	set('springAiVersion', "1.0.0-M7")
+	set('springAiVersion', '1.0.0-M7')
+	set('seleniumVersion', '4.32.0')
 }
 
 dependencies {
@@ -68,6 +69,9 @@ dependencies {
 	testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test'
 	testImplementation 'org.opensearch:opensearch-testcontainers:2.0.1'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// selenium
+	implementation "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
 }
 
 dependencyManagement {
@@ -120,4 +124,40 @@ tasks.compileKotlin{
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// Selenium
+def osMapping = [:]
+osMapping[OperatingSystem.WINDOWS.getFamilyName()] = "win32";
+osMapping[OperatingSystem.LINUX.getFamilyName()] = "linux64";
+osMapping[OperatingSystem.MAC_OS.getFamilyName()] = "mac64";
+
+def extMapping = [:]
+extMapping[OperatingSystem.WINDOWS.getFamilyName()] = ".exe";
+extMapping[OperatingSystem.LINUX.getFamilyName()] = "";
+extMapping[OperatingSystem.MAC_OS.getFamilyName()] = "";
+
+def osFamily = OperatingSystem.current().getFamilyName();
+
+def driverDir = file("$projectDir/driver")
+driverDir.mkdirs();
+
+def chromeExecutable = file(driverDir.getAbsolutePath() + "/chromedriver${extMapping[osFamily]}")
+def chromeVersion = System.getProperty("chromeVersion", '136.0.7103.92')
+import org.gradle.internal.os.OperatingSystem;
+
+tasks.register('downloadDriver', Copy) {
+
+	if (!chromeExecutable.exists()) {
+		def tempZip = File.createTempFile("chrome-driver", "")
+		def url = "https://storage.googleapis.com/chrome-for-testing-public/$chromeVersion/${osMapping[osFamily]}/chromedriver-${osMapping[osFamily]}.zip"
+		new URL(url).withInputStream { i -> tempZip.withOutputStream { it << i } }
+		from {
+			zipTree(tempZip.getAbsolutePath())
+		}
+		doLast {
+			tempZip.delete()
+		}
+	}
+	into chromeExecutable.getParentFile()
 }
