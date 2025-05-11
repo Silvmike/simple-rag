@@ -1,4 +1,4 @@
-package com.example.demo.config.properties.options.yandex_search
+package com.example.demo.config.properties.options.search_engines.yandex_search
 
 class WebDriverOptions {
     var local: Boolean = false

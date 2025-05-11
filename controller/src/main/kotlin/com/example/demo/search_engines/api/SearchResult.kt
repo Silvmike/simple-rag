@@ -1,4 +1,4 @@
-package com.example.demo.search_engines.yandex
+package com.example.demo.search_engines.api
 
 data class SearchResult(
     val url: String,

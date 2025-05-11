@@ -2,7 +2,7 @@ package com.example.demo
 
 import com.example.demo.app.DemoApplication
 import com.example.demo.containers.*
-import com.example.demo.search_engines.yandex.YandexSearchClient
+import com.example.demo.search_engines.api.SearchEngineClient
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -30,12 +30,12 @@ import java.util.concurrent.CountDownLatch
 class DemoApplicationTests {
 
 	@Autowired
-	private lateinit var yandexSearchClient: YandexSearchClient
+	private lateinit var searchEngineClient: SearchEngineClient
 
 	@Test
 	fun contextLoads() {
 
-		println(yandexSearchClient.query("Кто такой винни-пух?"))
+		println(searchEngineClient.query("Кто такой винни-пух?"))
 
 		CountDownLatch(1).await()
 	}

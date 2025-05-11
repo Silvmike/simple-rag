@@ -36,10 +36,14 @@ options:
     ollama:
       name: deepseek-r1:7b
       enabled: false
-  yandex-search-client:
-    enabled: true
-    driver:
-      local: false
-      # requires downloadDriver task execution
-      location: ./driver/chromedriver-linux64/chromedriver
-      headless: true
+  search-engine:
+    duck-duck-go:
+      enabled: true
+    yandex-search-client:
+      enabled: false
+      driver:
+        local: false
+        # requires downloadDriver task execution
+        location: ./driver/chromedriver-linux64/chromedriver
+        headless: true
+

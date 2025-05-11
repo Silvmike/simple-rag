@@ -1,5 +1,6 @@
 package com.example.demo.search_engines.yandex
 
+import com.example.demo.search_engines.api.SearchResult
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.openqa.selenium.By
