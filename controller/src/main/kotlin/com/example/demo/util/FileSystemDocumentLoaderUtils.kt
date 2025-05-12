@@ -8,7 +8,7 @@ import java.nio.file.Paths
 fun String.loadResourceDocument(): Document =
     FileSystemDocumentLoader.loadDocument(
         Paths.get(
-            javaClass.getResource(this)?.toURI() ?: throw RuntimeException("File not found!")
+            Thread.currentThread().contextClassLoader.getResource(this)?.toURI() ?: throw RuntimeException("File not found!")
         )
     )
 

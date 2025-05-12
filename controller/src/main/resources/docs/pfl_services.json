@@ -1,0 +1,8 @@
+[
+  {
+    "service_id": "pfl_get_data",
+    "name": "Сервис продуктов",
+    "path": "/getAllProducts",
+    "description": "Позволяет получить информацию по продуктам клиента"
+  }
+]

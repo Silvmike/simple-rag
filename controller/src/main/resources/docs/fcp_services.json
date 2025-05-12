@@ -1,0 +1,8 @@
+[
+  {
+    "service_id": "fcp_get_data",
+    "name": "Сервис продуктов",
+    "path": "/getProducts",
+    "description": "Позволяет получить информацию по продуктам клиента"
+  }
+]

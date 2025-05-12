@@ -1,6 +1,7 @@
 package com.example.demo
 
 import com.example.demo.app.DemoApplication
+import com.example.demo.chat.planning.Planner
 import com.example.demo.containers.*
 import com.example.demo.search_engines.api.SearchEngineClient
 import org.junit.jupiter.api.Test
@@ -32,10 +33,14 @@ class DemoApplicationTests {
 	@Autowired
 	private lateinit var searchEngineClient: SearchEngineClient
 
+	@Autowired
+	private lateinit var planner: Planner
+
 	@Test
 	fun contextLoads() {
 
 		println(searchEngineClient.query("Кто такой винни-пух?"))
+		println(planner.plan("Какие сервисы предоставляет Профиль ФЛ?"))
 
 		CountDownLatch(1).await()
 	}

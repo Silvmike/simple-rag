@@ -1,6 +1,8 @@
 package com.example.demo.app
 
-import com.example.demo.config.*
+import com.example.demo.chat.planning.demo.PlannerConfig
+import com.example.demo.config.CommonConfig
+import com.example.demo.config.CommonRestConfig
 import com.example.demo.config.misc.DisableJpaConfiguration
 import com.example.demo.config.misc.DisableQdrantConfiguration
 import com.example.demo.config.model.DeepSeekClientConfig
@@ -20,7 +22,8 @@ import org.springframework.context.annotation.Import
 	QueryServiceConfig::class,
 	CommonRestConfig::class,
 	DisableJpaConfiguration::class,
-	DisableQdrantConfiguration::class
+	DisableQdrantConfiguration::class,
+	PlannerConfig::class
 ])
 class DemoApplication
 

@@ -3,10 +3,9 @@ package com.example.demo.chat.planning.model
 import com.fasterxml.jackson.databind.JsonNode
 
 data class FunctionCall(
-    val order: Int,
-    val id: String,
-    val functionName: String,
-    var arguments: List<Argument> = emptyList(),
-    val status: FunctionStatus,
+    var id: String,
+    var function: String,
+    var arguments: List<Map<String, JsonNode>> = listOf(),
+    var status: String,
     var result: JsonNode? = null
 )

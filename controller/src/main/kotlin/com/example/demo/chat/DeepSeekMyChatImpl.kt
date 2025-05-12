@@ -12,7 +12,7 @@ class DeepSeekMyChatImpl(
     override fun exchange(message: String): String =
         client.exchange(
             DeepSeekRequest(
-                model = "deepseek-reasoner",
+                model = "deepseek-chat",
                 messages = listOf(
                     Message(
                         role = "user",
