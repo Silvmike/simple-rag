@@ -10,7 +10,8 @@ interface PlanningPromptProvider {
         tools: List<CallableFunction>,
         plan: List<FunctionCall>,
         query: String,
-        response: JsonNode?
+        response: JsonNode?,
+        forceRespond: Boolean
     ): String
 
 }

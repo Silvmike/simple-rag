@@ -1,6 +1,6 @@
 [
-  { "name": "CPC", "aliases": ["CPC", "КПК"] },
-  { "name": "PFL", "aliases": ["ПФЛ", "ФП Профиль ФЛ", "Профиль ФЛ", "ResProfile"] },
-  { "name": "FCP", "aliases": ["ФПК", "ФП ФПК", "Фронтальный профиль клиента", "FCP"] },
-  { "name": "DR", "aliases": ["ЦР", "Цифровой рубль", "АС ЦР"] }
+  { "system_id": "CPC", "aliases": ["CPC", "КПК"] },
+  { "system_id": "PFL", "aliases": ["ПФЛ", "ФП Профиль ФЛ", "Профиль ФЛ", "ResProfile"] },
+  { "system_id": "FCP", "aliases": ["ФПК", "ФП ФПК", "Фронтальный профиль клиента", "FCP"] },
+  { "system_id": "DR", "aliases": ["ЦР", "Цифровой рубль", "АС ЦР"] }
 ]

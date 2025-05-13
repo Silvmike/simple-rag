@@ -39,8 +39,8 @@ class DemoApplicationTests {
 	@Test
 	fun contextLoads() {
 
-		println(searchEngineClient.query("Кто такой винни-пух?"))
-		println(planner.plan("Какие сервисы предоставляет Профиль ФЛ?"))
+		//println(searchEngineClient.query("Кто такой винни-пух?"))
+		println(planner.plan("А что можно передать в атрибут regionKinds?"))
 
 		CountDownLatch(1).await()
 	}

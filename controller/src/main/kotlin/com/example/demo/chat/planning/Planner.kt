@@ -32,15 +32,19 @@ class Planner(
 
         var currentPlan: List<FunctionCall> = emptyList()
         var currentResponse: JsonNode? = null
+        var forceRespond = false
 
         for (i in 1..maxIterations) {
+
 
             val prompt = planningPromptProvider.provide(
                 tools = tools,
                 plan = currentPlan,
                 query = query,
-                response = null
+                response = null,
+                forceRespond = forceRespond
             )
+
             println("NEW PROMPT: $prompt")
 
             val response = myChat.exchange(prompt).replace("```json", "").replace("```", "")
@@ -53,11 +57,24 @@ class Planner(
             }
 
             currentResponse = plannerResponse.response
-            currentPlan = evaluatePlan(plannerResponse.plan)
+
+            val oldPlan = currentPlan
+            currentPlan = evaluatePlan(mergePlans(currentPlan, plannerResponse.plan))
+            forceRespond = oldPlan == currentPlan
 
         }
 
         return "Извините, я пока только учусь."
+    }
+
+    private fun mergePlans(currentPlan: List<FunctionCall>, plan: List<FunctionCall>): List<FunctionCall> {
+        val currentPlanMap = mutableMapOf<String, FunctionCall>().apply {
+            putAll(currentPlan.associateBy { it.id })
+        }
+        plan.filter { currentPlanMap[it.id]?.status != "SUCCESS" }.forEach {
+            currentPlanMap[it.id] = it
+        }
+        return currentPlanMap.values.toList()
     }
 
     private fun evaluatePlan(plan: List<FunctionCall>): List<FunctionCall> =
@@ -68,6 +85,7 @@ class Planner(
                 val function = callableFunctionRegistry.lookup(call.function)[0]
                 val executor = callableFunctionExecutorRegistry.lookup(function)
                 var status = FunctionStatus.SUCCESS.name
+                var statusDescription: String? = null
                 var result: JsonNode? = null
                 try {
                     result = executor.get().execute(
@@ -80,12 +98,14 @@ class Planner(
                     )
                 } catch (e: Exception) {
                     status = FunctionStatus.FAILURE.name
+                    statusDescription = e.message
                 }
                 FunctionCall(
                     id = call.id,
                     function = call.function,
                     result = result,
                     status = status,
+                    statusDescription = statusDescription,
                     arguments = call.arguments,
                 )
             }

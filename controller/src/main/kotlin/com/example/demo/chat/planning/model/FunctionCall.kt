@@ -7,5 +7,6 @@ data class FunctionCall(
     var function: String,
     var arguments: List<Map<String, JsonNode>> = listOf(),
     var status: String,
+    var statusDescription: String? = null,
     var result: JsonNode? = null
 )

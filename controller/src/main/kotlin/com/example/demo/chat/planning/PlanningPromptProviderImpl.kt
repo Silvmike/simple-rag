@@ -21,7 +21,8 @@ class PlanningPromptProviderImpl : PlanningPromptProvider {
         tools: List<CallableFunction>,
         plan: List<FunctionCall>,
         query: String,
-        response: JsonNode?
+        response: JsonNode?,
+        forceRespond: Boolean
     ): String {
 
         val instructionsTemplate = ResourceTemplateProvider("planning/instruction.txt")
@@ -32,7 +33,8 @@ class PlanningPromptProviderImpl : PlanningPromptProvider {
                 plan = plan,
                 functions = tools,
                 query = query,
-                response = response
+                response = response,
+                forceRespond = forceRespond
             )
         )
     }
@@ -44,5 +46,6 @@ private data class PlanningPrompt(
     val plan: List<FunctionCall>,
     val query: String,
     val response: JsonNode?,
-    val resolved: Boolean = false
+    val resolved: Boolean = false,
+    val forceRespond: Boolean = false,
 )

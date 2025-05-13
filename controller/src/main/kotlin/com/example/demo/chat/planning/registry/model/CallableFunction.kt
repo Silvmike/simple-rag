@@ -6,5 +6,6 @@ data class CallableFunction(
     val name: String,
     val description: String,
     val arguments: List<CallableArgument>,
-    val responseModel: JsonNode
+    val responseModel: JsonNode,
+    val cost: Float = 1.0f
 )

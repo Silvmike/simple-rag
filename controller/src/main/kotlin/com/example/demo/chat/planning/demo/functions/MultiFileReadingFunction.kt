@@ -9,21 +9,31 @@ import org.springframework.core.io.ClassPathResource
 import java.nio.charset.Charset
 
 class MultiFileReadingFunction(
-    private val resourcePrefix: String,
-    private val argumentName: String,
-    private val resourceSuffix: String
+    private val argumentNames: List<String>,
+    private val sourceFileNameFormatter: SourceFileNameFormatter,
+    private val errorMessageFormatter: ErrorMessageFormatter
 ) : CallableFunctionExecutor {
 
     private val objectMapper = ObjectMapper()
 
     override fun execute(function: CallableFunction, arguments: Map<String, JsonNode>): JsonNode {
-        val argument = arguments[argumentName]!!
-        val resource = ClassPathResource("${resourcePrefix}${argument.textValue().replace("\"","").lowercase()}${resourceSuffix}")
-        return objectMapper.readTree(
-            resource.inputStream.use {
-                IOUtils.toString(it, Charset.defaultCharset())
+        try {
+
+            val parsedArguments = argumentNames.associateWith {
+                arguments[it]?.asText()?.lowercase()
             }
-        )
+
+            val resource = ClassPathResource(
+                sourceFileNameFormatter.format(parsedArguments)
+            )
+            return objectMapper.readTree(
+                resource.inputStream.use {
+                    IOUtils.toString(it, Charset.defaultCharset())
+                }
+            )
+        } catch (e: Exception) {
+            throw RuntimeException(errorMessageFormatter.format(function, arguments, e))
+        }
     }
 
 }
