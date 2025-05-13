@@ -11,7 +11,7 @@ class GigaChatMyChatImpl(
     private val modelSelector: ModelSelector
 ) : MyChat {
 
-    override fun exchange(message: String): String {
+    override fun exchange(message: String, options: Map<String, String>): String {
         val model = modelSelector.selectModel()
         val chat = Chat(
             model = model,

@@ -40,7 +40,12 @@ class DemoApplicationTests {
 	fun contextLoads() {
 
 		//println(searchEngineClient.query("Кто такой винни-пух?"))
-		println(planner.plan("А что можно передать в атрибут regionKinds?"))
+		println(
+			planner.plan(
+				query = "А что можно передать в атрибут regionKinds?",
+				temperature = 0.4f
+			)
+		)
 
 		CountDownLatch(1).await()
 	}

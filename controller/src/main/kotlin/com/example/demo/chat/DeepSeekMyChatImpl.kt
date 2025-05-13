@@ -9,7 +9,7 @@ class DeepSeekMyChatImpl(
     private val client: DeepSeekClient
 ) : MyChat {
 
-    override fun exchange(message: String): String =
+    override fun exchange(message: String, options: Map<String, String>): String =
         client.exchange(
             DeepSeekRequest(
                 model = "deepseek-chat",
@@ -18,7 +18,13 @@ class DeepSeekMyChatImpl(
                         role = "user",
                         content = message
                     )
-                )
+                ),
+                temperature = options["temperature"]?.toFloat(),
+                topP = options["top_p"]?.toFloat(),
+                logprobs =
+                    if (options.containsKey("top_logprobs")) true
+                    else options["logprobs"]?.toBoolean(),
+                topLogprobs = options["top_logprobs"]?.toInt(),
             )
         ).choices.firstOrNull()?.message?.content ?: throw IllegalStateException("No completion")
 

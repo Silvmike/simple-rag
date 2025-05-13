@@ -26,7 +26,7 @@ class Planner(
         .registerModule(KotlinModule.Builder().build())
         .registerModule(JavaTimeModule())
 
-    fun plan(query: String): String {
+    fun plan(query: String, temperature: Float = 0.3f): String {
 
         val tools = callableFunctionRegistry.getAll()
 
@@ -47,7 +47,12 @@ class Planner(
 
             println("NEW PROMPT: $prompt")
 
-            val response = myChat.exchange(prompt).replace("```json", "").replace("```", "")
+            val response = myChat.exchange(
+                message = prompt,
+                options = mapOf(
+                    "temperature" to temperature.toString()
+                )
+            ).replace("```json", "").replace("```", "")
             println("LLM RESPONSE: $response")
 
             val plannerResponse = mapper.readValue(response, PlannerResponse::class.java)
